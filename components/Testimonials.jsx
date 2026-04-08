@@ -5,7 +5,7 @@ import gsap from "gsap";
 
 const testimonials = [
   {
-    quote: "Working with Industrial Ideation transformed our digital presence completely. They didn't just build a website; they built a brand experience.",
+    quote: "Working with Industrial Ideation transformed our digital presence completely. They didn’t just build a website; they built a brand experience.",
     author: "Elena M.",
     role: "CMO, Quantum Fintech",
     company: "Quantum"
@@ -54,36 +54,36 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section className="py-32 w-full bg-[var(--background)] overflow-hidden">
-      <div className="container mx-auto px-6 md:px-12 mb-16 text-center">
-        <h2 className="text-sm uppercase tracking-[0.2em] text-[var(--accent)] font-medium mb-4">
+    <section className="section-shell section-space w-full overflow-hidden bg-[var(--background)]">
+      <div className="section-inner mb-10 text-center md:mb-14">
+        <h2 className="mb-4 text-sm uppercase tracking-[0.2em] text-[var(--accent)] font-medium">
           Client Feedback
         </h2>
-        <h3 className="text-4xl md:text-5xl font-bold">
-          Don't just take our word for it.
+        <h3 className="mx-auto max-w-3xl text-3xl font-bold sm:text-4xl md:text-5xl">
+          Don&apos;t just take our word for it.
         </h3>
       </div>
 
       <div className="flex overflow-hidden group">
         <div 
           ref={scrollerRef} 
-          className="flex gap-8 px-4 w-max group-hover:[animation-play-state:paused]"
+          className="flex w-max gap-6 px-2 sm:px-4 md:gap-8 group-hover:[animation-play-state:paused]"
         >
           {testimonials.map((item, idx) => (
             <div 
               key={idx} 
-              className="w-[350px] md:w-[450px] glass p-8 md:p-10 rounded-2xl flex flex-col justify-between"
+              className="glass flex w-[320px] flex-col justify-between rounded-2xl p-6 md:w-[420px] md:p-8 lg:w-[450px] lg:p-10"
             >
               <div className="mb-8">
-                <div className="flex gap-1 mb-6 text-[var(--accent)]">
+                <div className="mb-6 flex gap-1 text-[var(--accent)]">
                   {[...Array(5)].map((_, i) => (
                     <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                     </svg>
                   ))}
                 </div>
-                <p className="text-lg md:text-xl leading-relaxed text-gray-200">
-                  "{item.quote}"
+                <p className="text-base leading-relaxed text-gray-200 md:text-lg lg:text-xl">
+                  &ldquo;{item.quote}&rdquo;
                 </p>
               </div>
               

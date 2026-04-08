@@ -34,11 +34,11 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 flex justify-center py-4 px-4 sm:px-6 md:px-12`}
+        className="fixed top-0 left-0 z-50 flex w-full justify-center px-[var(--section-pad-x)] py-4 transition-all duration-500"
       >
         <div 
-          className={`flex items-center justify-between w-full max-w-7xl rounded-full transition-all duration-500 px-6 ${
-            scrolled ? "py-3 glass shadow-lg" : "py-4 bg-transparent"
+          className={`flex w-full items-center justify-between rounded-full px-5 transition-all duration-500 sm:px-6 md:px-7 ${
+            scrolled ? "glass py-3 shadow-lg" : "bg-transparent py-4"
           }`}
         >
           {/* Logo */}
@@ -50,7 +50,7 @@ export default function Navbar() {
           </a>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden items-center gap-8 md:flex">
             {navLinks.map((link, i) => (
               <a
                 key={i}
@@ -78,7 +78,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Menu Toggle */}
-          <div className="md:hidden flex items-center z-50">
+          <div className="z-50 flex items-center md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="text-white focus:outline-none"
@@ -97,9 +97,9 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-[var(--background)] pt-24 px-6 md:hidden glass"
+            className="glass fixed inset-0 z-40 bg-[var(--background)] px-[var(--section-pad-x)] pt-24 md:hidden"
           >
-            <div className="flex flex-col items-center gap-8 text-2xl font-medium mt-12">
+            <div className="mt-12 flex flex-col items-center gap-8 text-2xl font-medium">
               {navLinks.map((link, i) => (
                 <a
                   key={i}

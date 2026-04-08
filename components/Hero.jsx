@@ -53,24 +53,26 @@ export default function Hero() {
       {/* Content */}
       <div 
         ref={textRef}
-        className="relative z-10 container mx-auto px-6 md:px-12 flex flex-col items-center justify-center text-center mt-12"
+        className="section-shell relative z-10 flex flex-col items-center justify-center pt-24 md:pt-28"
       >
-        <TextReveal delay={0.2} className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight max-w-5xl mb-6">
-          We Build Ideas That Move Industries.
-        </TextReveal>
-        
-        <TextReveal delay={0.8} className="text-gray-400 text-lg md:text-xl max-w-2xl mb-12">
-          A premium design and development agency accelerating digital transformation 
-          through innovative strategy and cinematic web experiences.
-        </TextReveal>
-        
-        <div className="flex flex-col sm:flex-row items-center gap-6 opacity-0 animate-[fadeIn_1s_ease-out_1.5s_forwards]">
-          <MagneticButton className="bg-white text-black px-8 py-4 rounded-full font-medium hover:bg-gray-200 w-full sm:w-auto">
-            View Our Work
-          </MagneticButton>
-          <MagneticButton className="glass text-white px-8 py-4 rounded-full font-medium hover:bg-[var(--surface-border)] w-full sm:w-auto">
-            Start a project
-          </MagneticButton>
+        <div className="section-inner flex flex-col items-center text-center">
+          <TextReveal delay={0.2} className="max-w-5xl text-5xl font-bold tracking-tighter leading-tight md:text-7xl lg:text-8xl">
+            We Build Ideas That Move Industries.
+          </TextReveal>
+          
+          <TextReveal delay={0.8} className="mt-6 max-w-2xl text-lg text-gray-400 md:mt-8 md:text-xl">
+            A premium design and development agency accelerating digital transformation
+            through innovative strategy and cinematic web experiences.
+          </TextReveal>
+          
+          <div className="mt-10 flex flex-col items-center gap-4 opacity-0 animate-[fadeIn_1s_ease-out_1.5s_forwards] sm:flex-row md:mt-12 md:gap-6">
+            <MagneticButton className="w-full rounded-full bg-white px-8 py-4 font-medium text-black hover:bg-gray-200 sm:w-auto">
+              View Our Work
+            </MagneticButton>
+            <MagneticButton className="glass w-full rounded-full px-8 py-4 font-medium text-white hover:bg-[var(--surface-border)] sm:w-auto">
+              Start a project
+            </MagneticButton>
+          </div>
         </div>
       </div>
       

@@ -1,17 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
+  --background: #000000;
   --foreground: #ededed;
   --accent: #c9a96e;
   /* Warm gold/amber */
   --accent-light: #e0c591;
   --accent-dark: #a38249;
-  --surface: rgba(255, 255, 255, 0.03);
+  --surface: rgb(0, 0, 0);
   --surface-border: rgba(255, 255, 255, 0.08);
 
   --font-inter: 'Inter', sans-serif;
   --font-outfit: 'Outfit', sans-serif;
+
+  --page-max-width: 80rem;
+  --section-pad-x: clamp(1.25rem, 3vw, 3rem);
+  --section-pad-y: clamp(6rem, 10vw, 8rem);
+  --section-pad-y-lg: clamp(7rem, 12vw, 10rem);
+  --reading-width: 42rem;
 }
 
 html {
@@ -31,6 +37,7 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-inter);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -55,6 +62,14 @@ h6 {
   font-family: var(--font-outfit);
   line-height: 1.1;
   letter-spacing: -0.02em;
+}
+
+p {
+  line-height: 1.7;
+}
+
+section {
+  isolation: isolate;
 }
 
 ::selection {
@@ -121,4 +136,26 @@ html.lenis {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-image: linear-gradient(135deg, var(--accent-light) 0%, var(--accent-dark) 100%);
+}
+
+.section-shell {
+  width: 100%;
+  padding-inline: var(--section-pad-x);
+}
+
+.section-inner {
+  width: min(100%, var(--page-max-width));
+  margin-inline: auto;
+}
+
+.section-space {
+  padding-block: var(--section-pad-y);
+}
+
+.section-space-lg {
+  padding-block: var(--section-pad-y-lg);
+}
+
+.reading-width {
+  max-width: var(--reading-width);
 }

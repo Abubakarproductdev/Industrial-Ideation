@@ -11,18 +11,18 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full bg-[#050505] text-gray-400 py-12 px-6 md:px-12 border-t border-[var(--surface-border)]">
-      <div className="container mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+    <footer className="section-shell w-full border-t border-[var(--surface-border)] bg-[#050505] py-12 text-gray-400">
+      <div className="section-inner">
+        <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
           
-          <div className="flex flex-col items-center md:items-start">
-            <h2 className="font-bold tracking-tighter text-2xl text-white mb-2">
+          <div className="flex flex-col items-center gap-2 md:items-start">
+            <h2 className="text-2xl font-bold tracking-tighter text-white">
               Ind.<span className="text-[var(--accent)]">Ideation</span>
             </h2>
             <p className="text-sm">Premium Digital Agency</p>
           </div>
           
-          <div className="flex flex-wrap justify-center gap-6 text-sm">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm">
             <a href="#" className="hover:text-white transition-colors">Instagram</a>
             <a href="#" className="hover:text-white transition-colors">Twitter</a>
             <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
@@ -39,9 +39,9 @@ export default function Footer() {
 
         </div>
         
-        <div className="w-full h-px bg-[var(--surface-border)] my-8"></div>
+        <div className="my-8 h-px w-full bg-[var(--surface-border)]"></div>
         
-        <div className="flex flex-col md:flex-row justify-between items-center text-xs text-gray-600 gap-4">
+        <div className="flex flex-col items-center justify-between gap-4 text-center text-xs text-gray-600 md:flex-row md:text-left">
           <p>&copy; {new Date().getFullYear()} Industrial Ideation. All rights reserved.</p>
           <div className="flex gap-4">
             <a href="#" className="hover:text-gray-300">Privacy Policy</a>

@@ -37,28 +37,30 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-32 w-full bg-[var(--background)] relative border-t border-[var(--surface-border)]">
+    <section id="contact" className="section-shell section-space relative w-full border-t border-[var(--surface-border)] bg-[var(--background)]">
       {/* Background glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[var(--accent)]/5 blur-[120px] pointer-events-none"></div>
       
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <div className="flex flex-col lg:flex-row gap-16 justify-between">
+      <div className="section-inner relative z-10">
+        <div className="flex flex-col justify-between gap-12 lg:flex-row lg:gap-16">
           
           <div className="w-full lg:w-1/2">
-            <h2 className="text-sm uppercase tracking-[0.2em] text-[var(--accent)] font-medium mb-6">
-              Start A Conversation
-            </h2>
-            <h3 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-              Let's Create <br />
-              Something <br />
-              <span className="text-gradient-accent">Extraordinary.</span>
-            </h3>
+            <div className="space-y-5 md:space-y-6">
+              <h2 className="text-sm uppercase tracking-[0.2em] text-[var(--accent)] font-medium">
+                Start A Conversation
+              </h2>
+              <h3 className="text-4xl font-bold leading-tight sm:text-5xl md:text-7xl">
+                Let&apos;s Create <br />
+                Something <br />
+                <span className="text-gradient-accent">Extraordinary.</span>
+              </h3>
+            </div>
             
-            <p className="text-xl text-gray-400 mb-12 max-w-md">
-              Ready to elevate your digital presence? We're currently accepting new projects for Q3 2026.
+            <p className="mt-8 max-w-md text-lg text-gray-400 md:mt-10 md:text-xl">
+              Ready to elevate your digital presence? We&apos;re currently accepting new projects for Q3 2026.
             </p>
             
-            <div className="space-y-6">
+            <div className="mt-10 space-y-6 md:mt-12">
               <div>
                 <h4 className="text-sm text-gray-500 uppercase tracking-widest mb-2">Email</h4>
                 <a href="mailto:hello@industrialideation.com" className="text-xl hover:text-[var(--accent)] transition-colors">
@@ -76,7 +78,7 @@ export default function Contact() {
           </div>
           
           <div className="w-full lg:w-5/12">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-8 glass p-8 md:p-12 rounded-3xl">
+            <form onSubmit={handleSubmit} className="glass flex flex-col gap-8 rounded-3xl p-6 md:p-10 lg:p-12">
               
               <div className="flex flex-col gap-2">
                 <label htmlFor="name" className="text-sm font-medium text-gray-400">Name</label>
@@ -106,7 +108,7 @@ export default function Contact() {
                 />
               </div>
               
-              <div className="flex flex-col gap-2 mb-4">
+              <div className="mb-2 flex flex-col gap-2">
                 <label htmlFor="message" className="text-sm font-medium text-gray-400">Project Details</label>
                 <textarea 
                   id="message" 
@@ -120,7 +122,7 @@ export default function Contact() {
                 />
               </div>
               
-              <MagneticButton className="w-full bg-white text-black py-4 flex items-center justify-center gap-2 group hover:bg-gray-200">
+              <MagneticButton className="group flex w-full items-center justify-center gap-2 bg-white py-4 text-black hover:bg-gray-200">
                 {isSubmitting ? (
                    <span className="animate-pulse">Sending...</span>
                 ) : isSubmitted ? (
