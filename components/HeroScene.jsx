@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Environment, ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
@@ -33,7 +33,6 @@ function Icosahedron() {
         <meshStandardMaterial 
           color={hovered ? "#c9a96e" : "#e0c591"} 
           wireframe={true}
-          wireframeLinewidth={2}
           emissive="#c9a96e"
           emissiveIntensity={hovered ? 0.5 : 0.2}
           transparent
@@ -58,21 +57,23 @@ export default function HeroScene() {
   return (
     <div className="w-full h-full absolute inset-0 z-0 opacity-60 pointer-events-auto">
       <Canvas camera={{ position: [0, 0, 4], fov: 45 }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        <directionalLight position={[-10, -10, -5]} intensity={0.2} color="#c9a96e" />
-        
-        <Icosahedron />
-        
-        <ContactShadows 
-          position={[0, -1.5, 0]} 
-          opacity={0.4} 
-          scale={5} 
-          blur={2} 
-          far={4} 
-          color="#000000"
-        />
-        <Environment preset="city" />
+        <Suspense fallback={null}>
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[10, 10, 5]} intensity={1} />
+          <directionalLight position={[-10, -10, -5]} intensity={0.2} color="#c9a96e" />
+          
+          <Icosahedron />
+          
+          <ContactShadows 
+            position={[0, -1.5, 0]} 
+            opacity={0.4} 
+            scale={5} 
+            blur={2} 
+            far={4} 
+            color="#000000"
+          />
+          <Environment preset="city" />
+        </Suspense>
       </Canvas>
     </div>
   );

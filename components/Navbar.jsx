@@ -36,10 +36,9 @@ export default function Navbar() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="fixed top-0 left-0 z-50 flex w-full justify-center px-[var(--section-pad-x)] py-4 transition-all duration-500"
       >
-        <div 
-          className={`flex w-full items-center justify-between rounded-full px-5 transition-all duration-500 sm:px-6 md:px-7 ${
-            scrolled ? "glass py-3 shadow-lg" : "bg-transparent py-4"
-          }`}
+        <div
+          className={`flex w-full items-center justify-between rounded-full px-5 transition-all duration-500 sm:px-6 md:px-7 ${scrolled ? "glass py-3 shadow-lg" : "bg-transparent py-4"
+            }`}
         >
           {/* Logo */}
           <a href="#" className="flex-shrink-0 z-50">
@@ -63,15 +62,14 @@ export default function Navbar() {
             ))}
           </div>
 
-  
+
           <div className="hidden md:block">
-            <a 
-              href="#contact" 
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                scrolled 
-                  ? 'bg-white text-black hover:bg-gray-200' 
-                  : 'bg-[var(--surface)] border border-[var(--surface-border)] text-white hover:bg-white hover:text-black'
-              }`}
+            <a
+              href="#contact"
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${scrolled
+                ? 'bg-white text-black hover:bg-gray-200'
+                : 'bg-[var(--surface)] border border-[var(--surface-border)] text-white hover:bg-white hover:text-black'
+                }`}
             >
               Start Project
             </a>

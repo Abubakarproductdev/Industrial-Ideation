@@ -8,13 +8,13 @@ import { easing } from "maath";
 import { galleryState } from "./servicesGalleryState";
 
 const GALLERY_SETTINGS = {
-  focusRadius: 2.5,
-  focusWidthBoost: 3.5,
+  focusRadius: 1.2,
+  focusWidthBoost: 5,
   focusHeightBoost: 2.5,
-  baseWidth: 1.0,
-  baseHeight: 4.5,
+  baseWidth: 1.2,
+  baseHeight: 5,
   gap: 0.2,
-  cameraZoom: 85,
+  cameraZoom: 75,
   backgroundColor: "#000000",
 };
 
