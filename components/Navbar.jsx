@@ -63,7 +63,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          /* CTA Button Desktop */
+  
           <div className="hidden md:block">
             <a 
               href="#contact" 

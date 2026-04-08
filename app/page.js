@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <>
       {loading && <Preloader onComplete={() => setLoading(false)} />}
-      
+
       <SmoothScroll>
         <main className={`min-h-screen bg-[var(--background)] transition-opacity duration-1000 ${loading ? 'opacity-0 h-screen overflow-hidden' : 'opacity-100'}`}>
           <Navbar />
