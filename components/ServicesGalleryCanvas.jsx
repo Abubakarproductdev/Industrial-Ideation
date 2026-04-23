@@ -18,7 +18,7 @@ const GALLERY_SETTINGS = {
   backgroundColor: "#000000",
 };
 
-function Strip({ item, index, total }) {
+function Strip({ item: project, index, total }) {
   const ref = useRef(null);
   const [hovered, setHovered] = useState(false);
 
@@ -85,14 +85,14 @@ function Strip({ item, index, total }) {
       ref.current.material,
       "grayscale",
       // Hovering reveals color cleanly
-      hovered ? 0 : Math.max(0.12, item.grayscale - myFocus * 0.8),
+      hovered ? 0 : Math.max(0.12, project.grayscale - myFocus * 0.8),
       0.15,
       delta
     );
 
     easing.dampC(
       ref.current.material.color,
-      hovered ? "#ffffff" : item.color,
+      hovered ? "#ffffff" : project.color,
       hovered ? 0.25 : 0.15,
       delta
     );
@@ -101,22 +101,34 @@ function Strip({ item, index, total }) {
   return (
     <Image
       ref={ref}
-      url={item.image}
-      alt=""
+      url={project.coverImage}
+      alt={project.title}
       position={[index * 2, 0, 0]}
       scale={[GALLERY_SETTINGS.baseWidth, GALLERY_SETTINGS.baseHeight, 1]}
       transparent
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
+      onPointerOver={() => {
+        setHovered(true);
+        document.body.style.cursor = "pointer";
+      }}
+      onPointerOut={() => {
+        setHovered(false);
+        document.body.style.cursor = "auto";
+      }}
+      onClick={(e) => {
+        e.stopPropagation();
+        import("./servicesGalleryState").then(({ setSelectedProject }) => {
+          setSelectedProject(project);
+        });
+      }}
     />
   );
 }
 
 function Track({ items }) {
   const processedItems = useMemo(() => {
-    return items.map((image, index) => ({
-      key: `${image}-${index}`,
-      image,
+    return items.map((project, index) => ({
+      ...project,
+      key: `${project.id}-${index}`,
       grayscale: index % 3 === 1 ? 0.95 : 0.62,
       color: index % 4 === 0 ? new THREE.Color("#d6d6d6") : new THREE.Color("#9a9a9a"),
     }));

@@ -3,26 +3,16 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useSnapshot } from "valtio";
+import { AnimatePresence } from "framer-motion";
 import ServicesGalleryCanvas from "./ServicesGalleryCanvas";
-import { resetServicesGalleryState, setServicesGalleryProgress } from "./servicesGalleryState";
-
-const galleryImages = [
-  "/1.jpg",
-  "/2.jpg",
-  "/3.jpg",
-  "/4.jpg",
-  "/5.jpg",
-  "/6.jpg",
-  "/7.jpg",
-  "/8.jpg",
-  "/9.jpg",
-  "/10.jpg",
-  "/11.jpg",
-  "/12.jpg",
-];
+import { resetServicesGalleryState, setServicesGalleryProgress, galleryState, setSelectedProject } from "./servicesGalleryState";
+import { projects } from "./servicesData";
+import ProjectDetail from "./ProjectDetail";
 
 export default function Services() {
   const sectionRef = useRef(null);
+  const { selectedProject } = useSnapshot(galleryState);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -31,7 +21,7 @@ export default function Services() {
     const trigger = ScrollTrigger.create({
       trigger: sectionRef.current,
       start: "top top",
-      end: `+=${galleryImages.length * 320}`,
+      end: `+=${projects.length * 320}`,
       pin: true,
       scrub: 0.8,
       anticipatePin: 1,
@@ -59,8 +49,17 @@ export default function Services() {
       className="relative h-screen w-full overflow-hidden bg-[#000000]"
     >
       <div className="relative h-full w-full">
-        <ServicesGalleryCanvas items={galleryImages} />
+        <ServicesGalleryCanvas items={projects} />
       </div>
+
+      <AnimatePresence>
+        {selectedProject && (
+          <ProjectDetail
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }
