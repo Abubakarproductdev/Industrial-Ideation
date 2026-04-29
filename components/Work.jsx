@@ -8,20 +8,20 @@ import { ArrowUpRight } from "lucide-react";
 
 const projects = [
   {
-    title: "Quantum Fintech",
-    category: "Web App & Identity",
+    title: "Industrial Manufacturing Designs",
+    category: "Mechanical Drawings",
     image: "/quantum.jpg",
     color: "#000000ff"
   },
   {
-    title: "Aether Lifestyle",
-    category: "E-Commerce",
+    title: "Blender Studio",
+    category: "Rendering and Animation",
     image: "/aether.jpg",
     color: "#ffffffff"
   },
   {
-    title: "Nexus Motors",
-    category: "3D Web Experience",
+    title: "Prototype Designs",
+    category: "3D printing + Assembly",
     image: "/nexus.jpg",
     color: "#491d1dff"
   }
@@ -57,10 +57,10 @@ export default function Work() {
   }, []);
 
   return (
-    <section id="work" ref={sectionRef} className="section-shell section-space w-full bg-[var(--background)]">
+    <section id="work" ref={sectionRef} className="section-shell section-space-lg w-full bg-[var(--background)]">
       <div className="section-inner">
-        <div className="mb-14 flex flex-col gap-6 md:mb-20 md:flex-row md:items-end md:justify-between">
-          <div className="space-y-4">
+        <div className="mb-16 flex flex-col gap-8 md:mb-24 md:flex-row md:items-end md:justify-between">
+          <div className="space-y-5">
             <TextReveal className="block text-sm uppercase tracking-[0.2em] text-[var(--accent)] font-medium">
               Selected Work
             </TextReveal>
@@ -74,9 +74,9 @@ export default function Work() {
           </a>
         </div>
 
-        <div className="flex flex-col gap-16 md:gap-24 xl:gap-28">
+        <div className="flex flex-col gap-20 md:gap-28 xl:gap-32">
           {projects.map((project, index) => (
-            <div key={index} className="group relative flex w-full flex-col items-start gap-8 md:flex-row md:items-center md:gap-14 lg:gap-16">
+            <div key={index} className="group relative flex w-full flex-col items-start gap-10 md:flex-row md:items-center md:gap-16 lg:gap-20">
 
               <div className={`w-full md:w-3/5 overflow-hidden rounded-2xl glass ${index % 2 !== 0 ? 'md:order-2' : ''} relative aspect-[4/3] group-hover:shadow-[0_0_40px_rgba(201,169,110,0.1)] transition-shadow duration-700`}>
                 {/* Fallback color if image is missing */}
@@ -100,8 +100,8 @@ export default function Work() {
               </div>
 
               <div className={`w-full md:w-2/5 ${index % 2 !== 0 ? 'md:text-right md:order-1' : ''}`}>
-                <div className="mb-3 font-mono text-sm text-[var(--accent)]">{String(index + 1).padStart(2, '0')}</div>
-                <h3 className="mb-4 text-3xl font-bold sm:text-4xl md:text-5xl">{project.title}</h3>
+                <div className="mb-4 font-mono text-sm text-[var(--accent)]">{String(index + 1).padStart(2, '0')}</div>
+                <h3 className="mb-5 text-3xl font-bold sm:text-4xl md:text-5xl">{project.title}</h3>
                 <p className="text-lg text-gray-400 md:text-xl">{project.category}</p>
               </div>
 

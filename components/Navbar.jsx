@@ -10,11 +10,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -34,54 +30,79 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="fixed top-0 left-0 z-50 flex w-full justify-center px-[var(--section-pad-x)] py-4 transition-all duration-500"
+        className="fixed inset-x-0 top-0 z-50 flex w-full justify-center px-[var(--section-pad-x)] pt-6 md:pt-8"
       >
         <div
-          className={`flex w-full items-center justify-between rounded-full px-5 transition-all duration-500 sm:px-6 md:px-7 ${scrolled ? "glass py-3 shadow-lg" : "bg-transparent py-4"
-            }`}
+          className={`flex w-full max-w-[var(--page-max-width)] items-center justify-between rounded-full border transition-all duration-500 ease-out ${
+            scrolled
+              ? "border-white/10 bg-black/40 px-6 py-3 shadow-2xl backdrop-blur-md"
+              : "border-transparent bg-transparent px-4 py-4 md:px-6 md:py-4"
+          }`}
         >
           {/* Logo */}
-          <a href="#" className="flex-shrink-0 z-50">
-            <h1 className={`font-bold tracking-tighter ${scrolled ? 'text-xl' : 'text-2xl'} transition-all duration-500`}>
-              <span className="text-white">Ind.</span>
-              <span className="text-gradient-accent">Ideation</span>
+          <a href="#" className="relative z-50 flex-shrink-0">
+            <h1 className="text-xl font-medium tracking-tight text-white transition-all duration-500 md:text-2xl">
+              Ind.<span className="text-gray-400">Ideation</span>
             </h1>
           </a>
 
           {/* Desktop Links */}
-          <div className="hidden items-center gap-8 md:flex">
+          <div className="hidden items-center gap-8 md:flex lg:gap-12">
             {navLinks.map((link, i) => (
               <a
                 key={i}
                 href={link.href}
-                className="text-sm text-gray-300 hover:text-white transition-colors relative group"
+                className="text-sm font-medium text-white/60 transition-colors duration-300 hover:text-white"
               >
                 {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--accent)] transition-all duration-300 group-hover:w-full"></span>
               </a>
             ))}
           </div>
 
-
+          {/* Desktop CTA */}
           <div className="hidden md:block">
             <a
               href="#contact"
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${scrolled
-                ? 'bg-white text-black hover:bg-gray-200'
-                : 'bg-[var(--surface)] border border-[var(--surface-border)] text-white hover:bg-white hover:text-black'
-                }`}
+              className={`inline-flex items-center justify-center rounded-full px-6 py-2.5 text-sm font-medium transition-all duration-300 ${
+                scrolled
+                  ? "bg-white text-black hover:bg-gray-200"
+                  : "border border-white/20 bg-white/5 text-white hover:bg-white hover:text-black backdrop-blur-sm"
+              }`}
             >
               Start Project
             </a>
           </div>
 
           {/* Mobile Menu Toggle */}
-          <div className="z-50 flex items-center md:hidden">
+          <div className="relative z-50 flex items-center md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="text-white focus:outline-none"
+              aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              <AnimatePresence mode="wait">
+                {mobileMenuOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ opacity: 0, rotate: -90 }}
+                    animate={{ opacity: 1, rotate: 0 }}
+                    exit={{ opacity: 0, rotate: 90 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <X size={24} strokeWidth={1.5} />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ opacity: 0, rotate: 90 }}
+                    animate={{ opacity: 1, rotate: 0 }}
+                    exit={{ opacity: 0, rotate: -90 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Menu size={24} strokeWidth={1.5} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </button>
           </div>
         </div>
@@ -91,30 +112,36 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="glass fixed inset-0 z-40 bg-[var(--background)] px-[var(--section-pad-x)] pt-24 md:hidden"
+            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(16px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 z-40 bg-black/60 px-[var(--section-pad-x)] pt-32 md:hidden"
           >
-            <div className="mt-12 flex flex-col items-center gap-8 text-2xl font-medium">
+            <div className="flex flex-col items-center gap-8 text-2xl font-light">
               {navLinks.map((link, i) => (
-                <a
+                <motion.a
                   key={i}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-white hover:text-[var(--accent)] transition-colors"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + i * 0.1, duration: 0.4 }}
+                  className="text-white/70 transition-colors hover:text-white"
                 >
                   {link.name}
-                </a>
+                </motion.a>
               ))}
-              <a
+              <motion.a
                 href="#contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="mt-4 px-8 py-3 bg-[var(--accent)] text-black rounded-full text-lg hover:bg-[var(--accent-light)] transition-colors"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.4 }}
+                className="mt-6 rounded-full bg-white px-8 py-3 text-lg font-medium text-black transition-transform active:scale-95"
               >
                 Start Project
-              </a>
+              </motion.a>
             </div>
           </motion.div>
         )}

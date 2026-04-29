@@ -14,9 +14,10 @@
   --font-outfit: 'Outfit', sans-serif;
 
   --page-max-width: 80rem;
-  --section-pad-x: clamp(1.25rem, 3vw, 3rem);
-  --section-pad-y: clamp(6rem, 10vw, 8rem);
-  --section-pad-y-lg: clamp(7rem, 12vw, 10rem);
+  --section-pad-x: clamp(1.25rem, 4vw, 4rem);
+  --section-pad-y: clamp(7.5rem, 12vw, 11rem);
+  --section-pad-y-lg: clamp(9rem, 14vw, 13rem);
+  --section-gap: clamp(4rem, 8vw, 8rem);
   --reading-width: 42rem;
 }
 
@@ -42,11 +43,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+
 
 a {
   color: inherit;
@@ -70,6 +67,7 @@ p {
 
 section {
   isolation: isolate;
+  scroll-margin-top: 7rem;
 }
 
 ::selection {

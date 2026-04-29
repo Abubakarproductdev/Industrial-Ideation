@@ -14,18 +14,18 @@ export default function ProjectDetail({ project, onClose }) {
       className="fixed inset-0 z-50 overflow-y-auto bg-black/95 backdrop-blur-md"
       data-lenis-prevent="true"
     >
-      <div className="relative min-h-screen w-full px-6 py-20 md:px-12 md:py-32">
+      <div className="relative min-h-screen w-full px-[var(--section-pad-x)] py-24 sm:py-28 md:py-36 lg:py-40">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="group fixed right-6 top-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20 md:right-12 md:top-12"
+          className="group fixed right-5 top-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20 sm:right-8 sm:top-8 md:right-12 md:top-12"
         >
           <X className="h-6 w-6 transition-transform group-hover:rotate-90" />
         </button>
 
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto max-w-[var(--page-max-width)]">
           {/* Header text */}
-          <div className="mb-20 max-w-3xl">
+          <div className="mb-16 max-w-3xl md:mb-24 lg:mb-28">
             <motion.h1
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -38,14 +38,14 @@ export default function ProjectDetail({ project, onClose }) {
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-8 text-lg font-light leading-relaxed text-zinc-400 md:text-xl"
+              className="mt-8 text-lg font-light leading-relaxed text-zinc-400 md:mt-10 md:text-xl"
             >
               {project.description}
             </motion.p>
           </div>
 
           {/* Masonry-like Grid for Images */}
-          <div className="columns-1 gap-6 sm:columns-2 lg:columns-3">
+          <div className="columns-1 gap-7 sm:columns-2 md:gap-8 lg:columns-3 lg:gap-10">
             {project.images.map((src, index) => {
               const isVideo = src.toLowerCase().endsWith(".mp4");
               return (
@@ -58,7 +58,7 @@ export default function ProjectDetail({ project, onClose }) {
                     delay: 0.4 + index * 0.1,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="mb-6 break-inside-avoid overflow-hidden rounded-xl bg-zinc-900"
+                  className="mb-7 break-inside-avoid overflow-hidden rounded-xl bg-zinc-900 md:mb-8 lg:mb-10"
                 >
                   {isVideo ? (
                     <video

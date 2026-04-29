@@ -37,15 +37,15 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="section-shell section-space relative w-full border-t border-[var(--surface-border)] bg-[var(--background)]">
+    <section id="contact" className="section-shell section-space-lg relative w-full border-t border-[var(--surface-border)] bg-[var(--background)]">
       {/* Background glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[var(--accent)]/5 blur-[120px] pointer-events-none"></div>
       
       <div className="section-inner relative z-10">
-        <div className="flex flex-col justify-between gap-12 lg:flex-row lg:gap-16">
+        <div className="flex flex-col justify-between gap-16 lg:flex-row lg:gap-20 xl:gap-28">
           
           <div className="w-full lg:w-1/2">
-            <div className="space-y-5 md:space-y-6">
+            <div className="space-y-6 md:space-y-8">
               <h2 className="text-sm uppercase tracking-[0.2em] text-[var(--accent)] font-medium">
                 Start A Conversation
               </h2>
@@ -56,11 +56,11 @@ export default function Contact() {
               </h3>
             </div>
             
-            <p className="mt-8 max-w-md text-lg text-gray-400 md:mt-10 md:text-xl">
+            <p className="mt-10 max-w-md text-lg text-gray-400 md:mt-12 md:text-xl">
               Ready to elevate your digital presence? We&apos;re currently accepting new projects for Q3 2026.
             </p>
             
-            <div className="mt-10 space-y-6 md:mt-12">
+            <div className="mt-12 space-y-8 md:mt-14">
               <div>
                 <h4 className="text-sm text-gray-500 uppercase tracking-widest mb-2">Email</h4>
                 <a href="mailto:hello@industrialideation.com" className="text-xl hover:text-[var(--accent)] transition-colors">
@@ -78,7 +78,7 @@ export default function Contact() {
           </div>
           
           <div className="w-full lg:w-5/12">
-            <form onSubmit={handleSubmit} className="glass flex flex-col gap-8 rounded-3xl p-6 md:p-10 lg:p-12">
+            <form onSubmit={handleSubmit} className="glass flex flex-col gap-9 rounded-3xl p-7 md:p-10 lg:p-12">
               
               <div className="flex flex-col gap-2">
                 <label htmlFor="name" className="text-sm font-medium text-gray-400">Name</label>

@@ -42,7 +42,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+    <section ref={containerRef} className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden py-32 md:py-40">
       {/* 3D Background */}
       <HeroScene />
       
@@ -53,23 +53,23 @@ export default function Hero() {
       {/* Content */}
       <div 
         ref={textRef}
-        className="section-shell relative z-10 flex flex-col items-center justify-center pt-24 md:pt-28"
+        className="section-shell relative z-10 flex flex-col items-center justify-center pt-16 md:pt-20"
       >
         <div className="section-inner flex flex-col items-center text-center">
-          <TextReveal delay={0.2} className="max-w-5xl text-5xl font-bold tracking-tighter leading-tight md:text-7xl lg:text-8xl">
+          <TextReveal delay={0.2} className="max-w-5xl text-5xl font-bold leading-tight tracking-tight md:text-7xl lg:text-8xl">
             We Build Ideas That Move Industries.
           </TextReveal>
           
-          <TextReveal delay={0.8} className="mt-6 max-w-2xl text-lg text-gray-400 md:mt-8 md:text-xl">
+          <TextReveal delay={0.8} className="mt-8 max-w-2xl text-lg text-gray-400 md:mt-10 md:text-xl">
             A premium design and development agency accelerating digital transformation
             through innovative strategy and cinematic web experiences.
           </TextReveal>
           
-          <div className="mt-10 flex flex-col items-center gap-4 opacity-0 animate-[fadeIn_1s_ease-out_1.5s_forwards] sm:flex-row md:mt-12 md:gap-6">
-            <MagneticButton className="w-full rounded-full bg-white px-8 py-4 font-medium text-black hover:bg-gray-200 sm:w-auto">
+          <div className="mt-12 flex flex-col items-center gap-5 opacity-0 animate-[fadeIn_1s_ease-out_1.5s_forwards] sm:flex-row md:mt-16 md:gap-6">
+            <MagneticButton className="w-full rounded-full bg-white px-8 py-4 font-medium text-black hover:bg-gray-200 sm:w-auto md:px-10 md:py-5">
               View Our Work
             </MagneticButton>
-            <MagneticButton className="glass w-full rounded-full px-8 py-4 font-medium text-white hover:bg-[var(--surface-border)] sm:w-auto">
+            <MagneticButton className="glass w-full rounded-full px-8 py-4 font-medium text-white hover:bg-[var(--surface-border)] sm:w-auto md:px-10 md:py-5">
               Start a project
             </MagneticButton>
           </div>
@@ -77,7 +77,7 @@ export default function Hero() {
       </div>
       
       {/* Scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-0 animate-[fadeIn_1s_ease-out_2s_forwards]">
+      <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 opacity-0 animate-[fadeIn_1s_ease-out_2s_forwards] md:bottom-12">
         <span className="text-xs tracking-widest uppercase text-gray-500 font-medium">Scroll</span>
         <div className="w-8 h-12 rounded-full border border-[var(--surface-border)] glass flex justify-center p-2">
           <motion.div 

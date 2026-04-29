@@ -41,19 +41,19 @@ export default function About() {
   }, []);
 
   return (
-    <section id="about" className="section-shell section-space relative w-full overflow-hidden bg-[#050505]">
+    <section id="about" className="section-shell section-space-lg relative w-full overflow-hidden bg-[#050505]">
       {/* Abstract Background */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[var(--accent)]/5 to-transparent pointer-events-none"></div>
       
       <div className="section-inner relative z-10">
-        <div className="flex flex-col gap-12 lg:flex-row lg:gap-20">
+        <div className="flex flex-col gap-16 lg:flex-row lg:gap-24 xl:gap-28">
           
-          <div className="w-full lg:w-1/2 space-y-6 md:space-y-8">
+          <div className="w-full space-y-8 md:space-y-10 lg:w-1/2">
             <h2 className="text-sm uppercase tracking-[0.2em] text-[var(--accent)] font-medium">
               Our Philosophy
             </h2>
             
-            <div className="space-y-3 text-3xl font-medium leading-tight md:text-5xl">
+            <div className="space-y-4 text-3xl font-medium leading-tight md:space-y-5 md:text-5xl">
               <TextReveal delay={0.1}>Design is not just what it looks like and feels like.</TextReveal>
               <TextReveal delay={0.3} className="text-[var(--accent)]">Design is how it works.</TextReveal>
             </div>
@@ -66,10 +66,10 @@ export default function About() {
             </TextReveal>
           </div>
 
-          <div ref={statsRef} className="grid w-full grid-cols-1 gap-6 pt-2 sm:grid-cols-2 lg:w-1/2 lg:gap-8 xl:gap-10 content-center">
+          <div ref={statsRef} className="grid w-full grid-cols-1 content-center gap-8 pt-4 sm:grid-cols-2 lg:w-1/2 lg:gap-10 xl:gap-12">
             {stats.map((stat, i) => (
-              <div key={i} className="stat-item border-l border-[var(--surface-border)] pl-6 py-4 md:pl-8">
-                <div className="mb-3 text-4xl font-bold text-white md:text-5xl xl:text-6xl">{stat.value}</div>
+              <div key={i} className="stat-item border-l border-[var(--surface-border)] py-5 pl-6 md:py-6 md:pl-8">
+                <div className="mb-4 text-4xl font-bold text-white md:text-5xl xl:text-6xl">{stat.value}</div>
                 <div className="text-sm text-gray-500 uppercase tracking-wider">{stat.label}</div>
               </div>
             ))}

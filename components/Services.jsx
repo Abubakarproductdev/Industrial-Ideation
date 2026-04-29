@@ -46,7 +46,7 @@ export default function Services() {
     <section
       ref={sectionRef}
       id="services"
-      className="relative h-screen w-full overflow-hidden bg-[#000000]"
+      className="relative mt-[var(--section-gap)] h-[100svh] w-full overflow-hidden bg-[#000000]"
     >
       <div className="relative h-full w-full">
         <ServicesGalleryCanvas items={projects} />
