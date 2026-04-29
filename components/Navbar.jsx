@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import Link from "next/link";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -18,10 +19,10 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "Services", href: "#services" },
-    { name: "Work", href: "#work" },
-    { name: "About", href: "#about" },
-    { name: "Contact", href: "#contact" },
+    { name: "Services", href: "/#services" },
+    { name: "Work", href: "/#work" },
+    { name: "About", href: "/#about" },
+    { name: "Contact", href: "/#contact" },
   ];
 
   return (
@@ -40,37 +41,37 @@ export default function Navbar() {
           }`}
         >
           {/* Logo */}
-          <a href="#" className="relative z-50 flex-shrink-0">
+          <Link href="/" className="relative z-50 flex-shrink-0">
             <h1 className="text-xl font-medium tracking-tight text-white transition-all duration-500 md:text-2xl">
               Ind.<span className="text-gray-400">Ideation</span>
             </h1>
-          </a>
+          </Link>
 
           {/* Desktop Links */}
           <div className="hidden items-center gap-8 md:flex lg:gap-12">
             {navLinks.map((link, i) => (
-              <a
+              <Link
                 key={i}
                 href={link.href}
-                className="text-sm font-medium text-white/60 transition-colors duration-300 hover:text-white"
+                className="text-sm font-medium text-black transition-colors duration-300 hover:text-white"
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
           </div>
 
           {/* Desktop CTA */}
           <div className="hidden md:block">
-            <a
-              href="#contact"
+            <Link
+              href="/#contact"
               className={`inline-flex items-center justify-center rounded-full px-6 py-2.5 text-sm font-medium transition-all duration-300 ${
                 scrolled
-                  ? "bg-white text-black hover:bg-gray-200"
-                  : "border border-white/20 bg-white/5 text-white hover:bg-white hover:text-black backdrop-blur-sm"
+                  ? "bg-white text-black hover:bg-black"
+                  : "border border-white/20 bg-black text-white hover:bg-white hover:text-black backdrop-blur-sm"
               }`}
             >
               Start Project
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -120,28 +121,34 @@ export default function Navbar() {
           >
             <div className="flex flex-col items-center gap-8 text-2xl font-light">
               {navLinks.map((link, i) => (
-                <motion.a
+                <motion.div
                   key={i}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + i * 0.1, duration: 0.4 }}
-                  className="text-white/70 transition-colors hover:text-white"
                 >
-                  {link.name}
-                </motion.a>
+                  <Link
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-white/70 transition-colors hover:text-white block"
+                  >
+                    {link.name}
+                  </Link>
+                </motion.div>
               ))}
-              <motion.a
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.4 }}
-                className="mt-6 rounded-full bg-white px-8 py-3 text-lg font-medium text-black transition-transform active:scale-95"
               >
-                Start Project
-              </motion.a>
+                <Link
+                  href="/#contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="mt-6 rounded-full bg-white px-8 py-3 text-lg font-medium text-black transition-transform active:scale-95 inline-block"
+                >
+                  Start Project
+                </Link>
+              </motion.div>
             </div>
           </motion.div>
         )}

@@ -5,25 +5,29 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TextReveal from "./TextReveal";
 import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 
 const projects = [
   {
     title: "Industrial Manufacturing Designs",
     category: "Mechanical Drawings",
     image: "/quantum.jpg",
-    color: "#000000ff"
+    color: "#000000ff",
+    slug: "industrial-manufacturing-designs"
   },
   {
     title: "Blender Studio",
     category: "Rendering and Animation",
     image: "/aether.jpg",
-    color: "#ffffffff"
+    color: "#ffffffff",
+    slug: "blender-studio"
   },
   {
     title: "Prototype Designs",
     category: "3D printing + Assembly",
     image: "/nexus.jpg",
-    color: "#491d1dff"
+    color: "#491d1dff",
+    slug: "prototype-designs"
   }
 ];
 
@@ -68,15 +72,15 @@ export default function Work() {
               Proof of Concept.
             </TextReveal>
           </div>
-          <a href="#" className="group flex items-center gap-2 self-start border-b border-[var(--surface-border)] pb-1 text-base transition-colors hover:border-white md:self-auto md:text-lg">
+          <Link href="#" className="group flex items-center gap-2 self-start border-b border-[var(--surface-border)] pb-1 text-base transition-colors hover:border-white md:self-auto md:text-lg">
             View Archive
             <ArrowUpRight size={20} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
-          </a>
+          </Link>
         </div>
 
         <div className="flex flex-col gap-20 md:gap-28 xl:gap-32">
           {projects.map((project, index) => (
-            <div key={index} className="group relative flex w-full flex-col items-start gap-10 md:flex-row md:items-center md:gap-16 lg:gap-20">
+            <Link href={`/work/${project.slug}`} key={index} className="group relative flex w-full flex-col items-start gap-10 md:flex-row md:items-center md:gap-16 lg:gap-20">
 
               <div className={`w-full md:w-3/5 overflow-hidden rounded-2xl glass ${index % 2 !== 0 ? 'md:order-2' : ''} relative aspect-[4/3] group-hover:shadow-[0_0_40px_rgba(201,169,110,0.1)] transition-shadow duration-700`}>
                 {/* Fallback color if image is missing */}
@@ -105,7 +109,7 @@ export default function Work() {
                 <p className="text-lg text-gray-400 md:text-xl">{project.category}</p>
               </div>
 
-            </div>
+            </Link>
           ))}
         </div>
       </div>

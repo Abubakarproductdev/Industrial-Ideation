@@ -70,9 +70,11 @@ export default function ProjectDetail({ project, onClose }) {
                       className="w-full h-auto object-cover"
                     />
                   ) : (
-                    <img
+                    <Image
                       src={src}
                       alt={`${project.title} - Image ${index + 1}`}
+                      width={1200}
+                      height={800}
                       className="w-full h-auto object-cover transition-transform duration-700 hover:scale-105"
                       loading="lazy"
                     />
