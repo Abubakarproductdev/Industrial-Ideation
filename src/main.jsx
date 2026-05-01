@@ -141,19 +141,68 @@ function goTo(url) {
       document.querySelector(next.hash)?.scrollIntoView({ behavior: "smooth" });
     });
   } else {
-    window.scrollTo({ top: 0, behavior: "instant" });
+    window.scrollTo(0, 0);
   }
 }
 
+function replaceUrl(url) {
+  const next = new URL(url, window.location.origin);
+  if (next.origin !== window.location.origin) {
+    window.location.replace(url);
+    return;
+  }
+
+  window.history.replaceState({}, "", `${next.pathname}${next.search}${next.hash}`);
+  window.dispatchEvent(new PopStateEvent("popstate"));
+}
+
+function buildModalUrl(projectId) {
+  const url = new URL(window.location.href);
+  if (projectId) {
+    url.searchParams.set("project", projectId);
+  } else {
+    url.searchParams.delete("project");
+  }
+  return `${url.pathname}${url.search}${url.hash}`;
+}
+
+function currentProjectFromSearch(items) {
+  const projectId = new URL(window.location.href).searchParams.get("project");
+  if (!projectId) return null;
+  return items.find((item) => item.id === projectId) ?? null;
+}
+
+function backOrFallback(fallbackUrl) {
+  const hasSameOriginReferrer =
+    !!document.referrer && new URL(document.referrer).origin === window.location.origin;
+
+  if (window.history.length > 1 && hasSameOriginReferrer) {
+    window.history.back();
+    return;
+  }
+
+  goTo(fallbackUrl);
+}
+
 function App() {
-  const [path, setPath] = createSignal(window.location.pathname);
+  const [location, setLocation] = createSignal({
+    path: window.location.pathname,
+    hash: window.location.hash,
+    search: window.location.search,
+  });
+
   const categorySlug = createMemo(() => {
-    const match = path().match(/^\/work\/([^/]+)/);
+    const match = location().path.match(/^\/work\/([^/]+)/);
     return match?.[1] ? decodeURIComponent(match[1]) : null;
   });
 
   onMount(() => {
-    const updateRoute = () => setPath(window.location.pathname);
+    const updateRoute = () =>
+      setLocation({
+        path: window.location.pathname,
+        hash: window.location.hash,
+        search: window.location.search,
+      });
     window.addEventListener("popstate", updateRoute);
     window.addEventListener("hashchange", updateRoute);
     onCleanup(() => {
@@ -167,13 +216,13 @@ function App() {
       when={categorySlug()}
       fallback={
         <SmoothScroll>
-          <Home />
+          <Home location={location} />
         </SmoothScroll>
       }
     >
       {(slug) => (
         <SmoothScroll>
-          <WorkCategoryPage slug={slug()} />
+          <WorkCategoryPage slug={slug()} location={location} />
         </SmoothScroll>
       )}
     </Show>
@@ -213,6 +262,8 @@ function SmoothScroll(props) {
     }
 
     onCleanup(() => {
+      document.body.style.overflow = "";
+      document.body.style.cursor = "auto";
       cancelAnimationFrame(frame);
       lenis?.destroy();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -222,7 +273,7 @@ function SmoothScroll(props) {
   return props.children;
 }
 
-function Home() {
+function Home(props) {
   const [loading, setLoading] = createSignal(true);
 
   return (
@@ -238,7 +289,7 @@ function Home() {
       >
         <Navbar />
         <Hero />
-        <Services />
+        <Services location={props.location} />
         <Work />
         <About />
         <Testimonials />
@@ -745,13 +796,15 @@ function MagneticButton(props) {
   );
 }
 
-function Services() {
+function Services(props) {
   const [progress, setProgress] = createSignal(0);
-  const [selectedProject, setSelectedProject] = createSignal(null);
   let sectionRef;
+  let trigger;
+
+  const selectedProject = createMemo(() => currentProjectFromSearch(serviceProjects));
 
   onMount(() => {
-    const trigger = ScrollTrigger.create({
+    trigger = ScrollTrigger.create({
       trigger: sectionRef,
       start: "top top",
       end: `+=${serviceProjects.length * 320}`,
@@ -763,13 +816,34 @@ function Services() {
       onLeave: () => setProgress(1),
     });
 
-    onCleanup(() => trigger.kill());
+    onCleanup(() => {
+      trigger?.kill();
+      trigger = null;
+    });
   });
+
+  createEffect(() => {
+    props.location();
+    document.body.style.cursor = "auto";
+    if (trigger) {
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+    }
+  });
+
+  const openProject = (project) => {
+    document.body.style.cursor = "auto";
+    goTo(buildModalUrl(project.id));
+  };
 
   const closeProject = () => {
     document.body.style.cursor = "auto";
-    setSelectedProject(null);
-    setTimeout(() => ScrollTrigger.refresh(), 100);
+    const fallbackUrl = `${window.location.pathname}${window.location.hash}`;
+    if (new URL(window.location.href).searchParams.has("project")) {
+      backOrFallback(fallbackUrl);
+    } else {
+      replaceUrl(fallbackUrl);
+    }
+    setTimeout(() => ScrollTrigger.refresh(), 60);
   };
 
   return (
@@ -781,7 +855,7 @@ function Services() {
       <ServicesGallery
         items={serviceProjects}
         progress={progress}
-        onSelect={setSelectedProject}
+        onSelect={openProject}
       />
 
       <Show when={selectedProject()}>
@@ -1356,8 +1430,24 @@ function Footer() {
 }
 
 function WorkCategoryPage(props) {
-  const [selectedProject, setSelectedProject] = createSignal(null);
   const categoryData = createMemo(() => workCategories[props.slug]);
+  const selectedProject = createMemo(() =>
+    currentProjectFromSearch(categoryData()?.projects ?? []),
+  );
+
+  const openProject = (project) => {
+    goTo(buildModalUrl(project.id));
+  };
+
+  const closeProject = () => {
+    document.body.style.cursor = "auto";
+    const fallbackUrl = `/work/${props.slug}`;
+    if (new URL(window.location.href).searchParams.has("project")) {
+      backOrFallback(fallbackUrl);
+    } else {
+      replaceUrl(fallbackUrl);
+    }
+  };
 
   return (
     <Show
@@ -1391,7 +1481,7 @@ function WorkCategoryPage(props) {
                   href="/#work"
                   onClick={(event) => {
                     event.preventDefault();
-                    goTo("/#work");
+                    backOrFallback("/#work");
                   }}
                   class="group flex items-center gap-2 border-none bg-transparent text-sm text-gray-400 transition-colors hover:text-white"
                 >
@@ -1416,7 +1506,7 @@ function WorkCategoryPage(props) {
                     <button
                       class="project-card group flex cursor-pointer flex-col gap-5 text-left"
                       style={{ "animation-delay": `${index() * 0.1}s` }}
-                      onClick={() => setSelectedProject(project)}
+                      onClick={() => openProject(project)}
                     >
                       <div class="glass relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-zinc-900 transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(201,169,110,0.15)]">
                         <div
@@ -1451,10 +1541,7 @@ function WorkCategoryPage(props) {
           <Show when={selectedProject()}>
             <ProjectDetail
               project={selectedProject()}
-              onClose={() => {
-                document.body.style.cursor = "auto";
-                setSelectedProject(null);
-              }}
+              onClose={closeProject}
             />
           </Show>
         </main>
@@ -1467,24 +1554,53 @@ function ProjectDetail(props) {
   createEffect(() => {
     if (props.project) {
       document.body.style.overflow = "hidden";
-      onCleanup(() => {
-        document.body.style.overflow = "";
-      });
+      document.body.style.cursor = "auto";
+    } else {
+      document.body.style.overflow = "";
     }
   });
+
+  onMount(() => {
+    const handleKeydown = (event) => {
+      if (event.key === "Escape") {
+        props.onClose?.();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeydown);
+    onCleanup(() => {
+      document.body.style.overflow = "";
+      document.body.style.cursor = "auto";
+      window.removeEventListener("keydown", handleKeydown);
+    });
+  });
+
+  const handleBackdropClick = (event) => {
+    if (event.target === event.currentTarget) {
+      props.onClose?.();
+    }
+  };
+
+  const handleCloseClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    props.onClose?.();
+  };
 
   return (
     <div
       class="project-detail fixed inset-0 z-50 overflow-y-auto bg-black/95 backdrop-blur-md"
       data-lenis-prevent="true"
+      onClick={handleBackdropClick}
     >
       <div class="relative min-h-screen w-full px-[var(--section-pad-x)] py-24 sm:py-28 md:py-36 lg:py-40">
         <button
-          onClick={props.onClose}
-          class="group fixed right-5 top-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20 sm:right-8 sm:top-8 md:right-12 md:top-12"
+          type="button"
+          onClick={handleCloseClick}
+          class="group fixed right-5 top-5 z-[70] flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20 sm:right-8 sm:top-8 md:right-12 md:top-12"
           aria-label="Close project detail"
         >
-          <Icon name="x" size={24} class="transition-transform group-hover:rotate-90" />
+          <Icon name="x" size={24} class="pointer-events-none transition-transform group-hover:rotate-90" />
         </button>
 
         <div class="mx-auto max-w-[var(--page-max-width)]">
