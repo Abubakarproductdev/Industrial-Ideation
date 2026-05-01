@@ -166,8 +166,8 @@ function buildModalUrl(projectId) {
   return `${url.pathname}${url.search}${url.hash}`;
 }
 
-function currentProjectFromSearch(items) {
-  const projectId = new URL(window.location.href).searchParams.get("project");
+function currentProjectFromSearch(items, search = window.location.search) {
+  const projectId = new URLSearchParams(search).get("project");
   if (!projectId) return null;
   return items.find((item) => item.id === projectId) ?? null;
 }
@@ -801,7 +801,9 @@ function Services(props) {
   let sectionRef;
   let trigger;
 
-  const selectedProject = createMemo(() => currentProjectFromSearch(serviceProjects));
+  const selectedProject = createMemo(() =>
+    currentProjectFromSearch(serviceProjects, props.location().search),
+  );
 
   onMount(() => {
     trigger = ScrollTrigger.create({
@@ -1432,7 +1434,7 @@ function Footer() {
 function WorkCategoryPage(props) {
   const categoryData = createMemo(() => workCategories[props.slug]);
   const selectedProject = createMemo(() =>
-    currentProjectFromSearch(categoryData()?.projects ?? []),
+    currentProjectFromSearch(categoryData()?.projects ?? [], props.location().search),
   );
 
   const openProject = (project) => {
@@ -1678,6 +1680,31 @@ function ProjectDetail(props) {
               }}
             </For>
           </div>
+
+          <Show when={props.project.drawings?.length}>
+            <div class="mt-16 md:mt-24">
+              <h2 class="mb-8 text-2xl font-medium text-white md:mb-10 md:text-3xl">
+                Drawings
+              </h2>
+              <div class="columns-1 gap-7 sm:columns-2 md:gap-8 lg:columns-3 lg:gap-10">
+                <For each={props.project.drawings}>
+                  {(src, index) => (
+                    <div
+                      class="detail-media mb-7 break-inside-avoid overflow-hidden rounded-xl bg-zinc-900 md:mb-8 lg:mb-10"
+                      style={{ "animation-delay": `${0.2 + index() * 0.1}s` }}
+                    >
+                      <img
+                        src={src}
+                        alt={`${props.project.title} - Drawing ${index() + 1}`}
+                        loading="lazy"
+                        class="h-auto w-full object-cover transition-transform duration-700 hover:scale-105"
+                      />
+                    </div>
+                  )}
+                </For>
+              </div>
+            </div>
+          </Show>
         </div>
       </div>
     </div>

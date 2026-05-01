@@ -221,45 +221,59 @@ export const workCategories = {
         id: "heated-hair-brush",
         title: "Premium Heated Boar Bristles Hair Brush Design",
         description: "A premium heated hair brush integrating boar bristles for professional-grade styling at home.",
-        coverImage: "/6.jpg",
+        coverImage: "/Brush/main.png",
         images: [
-          "/6.jpg"
+          "/Brush/main.png",
+          "/Brush/2.png"
+        ],
+        drawings: [
+          "/Brush/drawings.png"
         ]
       },
       {
         id: "waterproof-trash-can",
         title: "Waterproof Car Trash Can Design",
         description: "A compact, waterproof trash can engineered specifically for automotive interiors.",
-        coverImage: "/7.jpg",
+        coverImage: "/Car Trash Can/image.png",
         images: [
-          "/7.jpg"
+          "/Car Trash Can/image.png",
+          "/Car Trash Can/small.png",
+          "/Car Trash Can/WhatsApp Video 2025-05-18 at 12.27.19 AM.mp4"
         ]
       },
       {
         id: "miswak-holder",
         title: "Miswak Holder Design",
         description: "A hygienic and portable miswak holder designed for everyday carry and storage.",
-        coverImage: "/8.jpg",
+        coverImage: "/miswak holder/2.png",
         images: [
-          "/8.jpg"
+          "/miswak holder/2.png"
         ]
       },
       {
         id: "golf-putting-tool",
         title: "Prototype Drawing for Golf Putting Improvement Tool",
         description: "Engineering drawings and prototype design for a tool to improve golf putting accuracy.",
-        coverImage: "/9.jpg",
+        coverImage: "/golf Pudding pRACTICE TOOL/1.png",
         images: [
-          "/9.jpg"
+          "/golf Pudding pRACTICE TOOL/1.png",
+          "/golf Pudding pRACTICE TOOL/2.png",
+          "/golf Pudding pRACTICE TOOL/3.png"
+        ],
+        drawings: [
+          "/golf Pudding pRACTICE TOOL/DRAWING.png"
         ]
       },
       {
         id: "smart-infant-chair",
         title: "Prototyping 3D Smart Infant Care Chair",
         description: "A smart infant care chair concept with integrated sensors and ergonomic support for child safety.",
-        coverImage: "/10.jpg",
+        coverImage: "/child infant chair/1.png",
         images: [
-          "/10.jpg"
+          "/child infant chair/1.png",
+          "/child infant chair/2.png",
+          "/child infant chair/3.png",
+          "/child infant chair/4.png"
         ]
       }
     ]
