@@ -1220,22 +1220,11 @@ function Footer() {
             <h2 class="text-2xl font-bold tracking-tighter text-white">
               Ind.<span class="text-[var(--accent)]">Ideation</span>
             </h2>
-            <p class="text-sm">Premium Digital Agency</p>
+            <p class="text-sm">Industrial Product Agency</p>
           </div>
 
           <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm">
-            <a href="#" class="transition-colors hover:text-white">
-              Instagram
-            </a>
-            <a href="#" class="transition-colors hover:text-white">
-              Twitter
-            </a>
-            <a href="#" class="transition-colors hover:text-white">
-              LinkedIn
-            </a>
-            <a href="#" class="transition-colors hover:text-white">
-              Dribbble
-            </a>
+           
           </div>
 
           <button
