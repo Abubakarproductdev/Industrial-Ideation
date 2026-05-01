@@ -75,6 +75,8 @@ const testimonials = [
   },
 ];
 
+const contactEmail = "hello@industrialideation.com";
+
 function cx(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -195,6 +197,10 @@ function App() {
     const match = location().path.match(/^\/work\/([^/]+)/);
     return match?.[1] ? decodeURIComponent(match[1]) : null;
   });
+  const serviceSlug = createMemo(() => {
+    const match = location().path.match(/^\/services\/([^/]+)/);
+    return match?.[1] ? decodeURIComponent(match[1]) : null;
+  });
 
   onMount(() => {
     const updateRoute = () =>
@@ -213,16 +219,27 @@ function App() {
 
   return (
     <Show
-      when={categorySlug()}
+      when={serviceSlug()}
       fallback={
-        <SmoothScroll>
-          <Home location={location} />
-        </SmoothScroll>
+        <Show
+          when={categorySlug()}
+          fallback={
+            <SmoothScroll>
+              <Home location={location} />
+            </SmoothScroll>
+          }
+        >
+          {(slug) => (
+            <SmoothScroll>
+              <WorkCategoryPage slug={slug()} location={location} />
+            </SmoothScroll>
+          )}
+        </Show>
       }
     >
       {(slug) => (
         <SmoothScroll>
-          <WorkCategoryPage slug={slug()} location={location} />
+          <ServiceProjectPage slug={slug()} />
         </SmoothScroll>
       )}
     </Show>
@@ -293,7 +310,6 @@ function Home(props) {
         <Work />
         <About />
         <Testimonials />
-        <Contact />
         <Footer />
       </main>
     </>
@@ -382,7 +398,6 @@ function Navbar() {
     { name: "Services", href: "/#services" },
     { name: "Work", href: "/#work" },
     { name: "About", href: "/#about" },
-    { name: "Contact", href: "/#contact" },
   ];
 
   onMount(() => {
@@ -440,8 +455,7 @@ function Navbar() {
 
           <div class="hidden md:block">
             <a
-              href="/#contact"
-              onClick={(event) => handleNav(event, "/#contact")}
+              href={`mailto:${contactEmail}`}
               class={cx(
                 "inline-flex items-center justify-center rounded-full px-6 py-2.5 text-sm font-medium transition-all duration-300",
                 scrolled()
@@ -481,8 +495,7 @@ function Navbar() {
               )}
             </For>
             <a
-              href="/#contact"
-              onClick={(event) => handleNav(event, "/#contact")}
+              href={`mailto:${contactEmail}`}
               class="mobile-link mt-6 inline-block rounded-full bg-white px-8 py-3 text-lg font-medium text-black transition-transform active:scale-95"
               style={{ "animation-delay": "0.5s" }}
             >
@@ -586,14 +599,14 @@ function Hero() {
             delay={0.2}
             class="max-w-5xl text-5xl font-bold leading-tight tracking-tight md:text-7xl lg:text-8xl"
           >
-            We Build Ideas That Move Industries.
+            We Build Ideas That  Move Industries.
           </TextReveal>
 
           <TextReveal
             delay={0.8}
             class="mt-8 max-w-2xl text-lg text-gray-400 md:mt-10 md:text-xl"
           >
-            A premium design and development agency accelerating digital
+            A design and development agency accelerating digital
             transformation through innovative strategy and cinematic web
             experiences.
           </TextReveal>
@@ -606,7 +619,9 @@ function Hero() {
               View Our Work
             </MagneticButton>
             <MagneticButton
-              onClick={() => goTo("/#contact")}
+              onClick={() => {
+                window.location.href = `mailto:${contactEmail}`;
+              }}
               class="glass w-full rounded-full px-8 py-4 font-medium text-white hover:bg-[var(--surface-border)] sm:w-auto md:px-10 md:py-5"
             >
               Start a project
@@ -616,13 +631,12 @@ function Hero() {
       </div>
 
       <div class="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 animate-[fadeIn_1s_ease-out_2s_forwards] flex-col items-center gap-3 opacity-0 md:bottom-12">
-        <span class="text-xs font-medium uppercase tracking-widest text-gray-500">
-          Scroll
-        </span>
+       
         <div class="glass flex h-12 w-8 justify-center rounded-full border border-[var(--surface-border)] p-2">
           <div class="scroll-arrow">
             <Icon name="move-down" size={14} class="text-[var(--accent)]" />
-          </div>
+          </div>Instagram
+
         </div>
       </div>
     </section>
@@ -801,10 +815,6 @@ function Services(props) {
   let sectionRef;
   let trigger;
 
-  const selectedProject = createMemo(() =>
-    currentProjectFromSearch(serviceProjects, props.location().search),
-  );
-
   onMount(() => {
     trigger = ScrollTrigger.create({
       trigger: sectionRef,
@@ -834,18 +844,7 @@ function Services(props) {
 
   const openProject = (project) => {
     document.body.style.cursor = "auto";
-    goTo(buildModalUrl(project.id));
-  };
-
-  const closeProject = () => {
-    document.body.style.cursor = "auto";
-    const fallbackUrl = `${window.location.pathname}${window.location.hash}`;
-    if (new URL(window.location.href).searchParams.has("project")) {
-      backOrFallback(fallbackUrl);
-    } else {
-      replaceUrl(fallbackUrl);
-    }
-    setTimeout(() => ScrollTrigger.refresh(), 60);
+    goTo(`/services/${encodeURIComponent(project.id)}`);
   };
 
   return (
@@ -859,10 +858,6 @@ function Services(props) {
         progress={progress}
         onSelect={openProject}
       />
-
-      <Show when={selectedProject()}>
-        <ProjectDetail project={selectedProject()} onClose={closeProject} />
-      </Show>
     </section>
   );
 }
@@ -1212,164 +1207,6 @@ function Testimonials() {
   );
 }
 
-function Contact() {
-  const [formState, setFormState] = createSignal({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = createSignal(false);
-  const [isSubmitted, setIsSubmitted] = createSignal(false);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      setFormState({ name: "", email: "", message: "" });
-      setTimeout(() => setIsSubmitted(false), 5000);
-    }, 1500);
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.currentTarget;
-    setFormState((current) => ({ ...current, [name]: value }));
-  };
-
-  return (
-    <section
-      id="contact"
-      class="section-shell section-space-lg relative w-full border-t border-[var(--surface-border)] bg-[var(--background)]"
-    >
-      <div class="pointer-events-none absolute left-1/2 top-0 h-[300px] w-[800px] -translate-x-1/2 bg-[var(--accent)]/5 blur-[120px]" />
-
-      <div class="section-inner relative z-10">
-        <div class="flex flex-col justify-between gap-16 lg:flex-row lg:gap-20 xl:gap-28">
-          <div class="w-full lg:w-1/2">
-            <div class="space-y-6 md:space-y-8">
-              <h2 class="text-sm font-medium uppercase tracking-[0.2em] text-[var(--accent)]">
-                Start A Conversation
-              </h2>
-              <h3 class="text-4xl font-bold leading-tight sm:text-5xl md:text-7xl">
-                Let&apos;s Create <br />
-                Something <br />
-                <span class="text-gradient-accent">Extraordinary.</span>
-              </h3>
-            </div>
-
-            <p class="mt-10 max-w-md text-lg text-gray-400 md:mt-12 md:text-xl">
-              Ready to elevate your digital presence? We&apos;re currently
-              accepting new projects for Q3 2026.
-            </p>
-
-            <div class="mt-12 space-y-8 md:mt-14">
-              <div>
-                <h4 class="mb-2 text-sm uppercase tracking-widest text-gray-500">
-                  Email
-                </h4>
-                <a
-                  href="mailto:hello@industrialideation.com"
-                  class="text-xl transition-colors hover:text-[var(--accent)]"
-                >
-                  hello@industrialideation.com
-                </a>
-              </div>
-              <div>
-                <h4 class="mb-2 text-sm uppercase tracking-widest text-gray-500">
-                  Location
-                </h4>
-                <p class="text-xl text-gray-300">
-                  New York, NY <br />
-                  Global Operations
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="w-full lg:w-5/12">
-            <form
-              onSubmit={handleSubmit}
-              class="glass flex flex-col gap-9 rounded-3xl p-7 md:p-10 lg:p-12"
-            >
-              <FormField
-                label="Name"
-                id="name"
-                type="text"
-                value={formState().name}
-                onInput={handleChange}
-                placeholder="John Doe"
-              />
-              <FormField
-                label="Email Address"
-                id="email"
-                type="email"
-                value={formState().email}
-                onInput={handleChange}
-                placeholder="john@company.com"
-              />
-              <div class="mb-2 flex flex-col gap-2">
-                <label for="message" class="text-sm font-medium text-gray-400">
-                  Project Details
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  value={formState().message}
-                  onInput={handleChange}
-                  required
-                  class="resize-none border-b border-[var(--surface-border)] bg-transparent pb-4 text-lg outline-none transition-colors focus:border-white"
-                  placeholder="Tell us about your goals..."
-                />
-              </div>
-
-              <MagneticButton class="group flex w-full items-center justify-center gap-2 bg-white py-4 text-black hover:bg-gray-200">
-                <Show
-                  when={!isSubmitting() && !isSubmitted()}
-                  fallback={
-                    <span class={isSubmitting() ? "animate-pulse" : ""}>
-                      {isSubmitting() ? "Sending..." : "Message Sent!"}
-                    </span>
-                  }
-                >
-                  Send Inquiry
-                  <Icon
-                    name="arrow-right"
-                    size={18}
-                    class="transition-transform group-hover:translate-x-1"
-                  />
-                </Show>
-              </MagneticButton>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function FormField(props) {
-  return (
-    <div class="flex flex-col gap-2">
-      <label for={props.id} class="text-sm font-medium text-gray-400">
-        {props.label}
-      </label>
-      <input
-        type={props.type}
-        id={props.id}
-        name={props.id}
-        value={props.value}
-        onInput={props.onInput}
-        required
-        class="border-b border-[var(--surface-border)] bg-transparent pb-4 text-lg outline-none transition-colors focus:border-white"
-        placeholder={props.placeholder}
-      />
-    </div>
-  );
-}
-
 function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1546,6 +1383,162 @@ function WorkCategoryPage(props) {
               onClose={closeProject}
             />
           </Show>
+        </main>
+      )}
+    </Show>
+  );
+}
+
+function ProjectDetailContent(props) {
+  return (
+    <div class="mx-auto max-w-[var(--page-max-width)]">
+      <div class="mb-16 max-w-3xl md:mb-24 lg:mb-28">
+        <h1 class="detail-enter text-4xl font-light tracking-tight text-white md:text-6xl lg:text-7xl">
+          {props.project.title}
+        </h1>
+        <p class="detail-enter mt-8 text-lg font-light leading-relaxed text-zinc-400 md:mt-10 md:text-xl">
+          {props.project.description}
+        </p>
+      </div>
+
+      <Show when={props.project.caseStudy}>
+        <div class="detail-enter mb-16 rounded-2xl border border-white/5 bg-zinc-900/50 p-8 backdrop-blur-sm md:mb-24 md:p-12 lg:mb-28">
+          <h2 class="mb-8 text-2xl font-medium text-white md:mb-10 md:text-3xl">
+            Case Study
+          </h2>
+          <div class="grid grid-cols-1 gap-x-12 gap-y-10 md:grid-cols-2">
+            <For each={props.project.caseStudy}>
+              {(section) => (
+                <div class="flex flex-col">
+                  <h3 class="mb-3 text-lg font-medium tracking-wide text-[var(--accent)]">
+                    {section.title}
+                  </h3>
+                  <Show when={section.content}>
+                    <p class="text-[15px] leading-relaxed text-zinc-300">
+                      {section.content}
+                    </p>
+                  </Show>
+                  <Show when={section.list}>
+                    <ul class="ml-4 mt-2 list-outside list-disc space-y-2 text-[15px] text-zinc-300">
+                      <For each={section.list}>
+                        {(item) => <li class="pl-1 leading-relaxed">{item}</li>}
+                      </For>
+                    </ul>
+                  </Show>
+                </div>
+              )}
+            </For>
+          </div>
+        </div>
+      </Show>
+
+      <div class="columns-1 gap-7 sm:columns-2 md:gap-8 lg:columns-3 lg:gap-10">
+        <For each={props.project.images}>
+          {(src, index) => {
+            const isVideo = src.toLowerCase().endsWith(".mp4");
+            return (
+              <div
+                class="detail-media mb-7 break-inside-avoid overflow-hidden rounded-xl bg-zinc-900 md:mb-8 lg:mb-10"
+                style={{ "animation-delay": `${0.4 + index() * 0.1}s` }}
+              >
+                <Show
+                  when={isVideo}
+                  fallback={
+                    <img
+                      src={src}
+                      alt={`${props.project.title} - Image ${index() + 1}`}
+                      loading="lazy"
+                      class="h-auto w-full object-cover transition-transform duration-700 hover:scale-105"
+                    />
+                  }
+                >
+                  <video
+                    src={src}
+                    autoplay
+                    loop
+                    muted
+                    playsinline
+                    class="h-auto w-full object-cover"
+                  />
+                </Show>
+              </div>
+            );
+          }}
+        </For>
+      </div>
+
+      <Show when={props.project.drawings?.length}>
+        <div class="mt-16 md:mt-24">
+          <h2 class="mb-8 text-2xl font-medium text-white md:mb-10 md:text-3xl">
+            Drawings
+          </h2>
+          <div class="columns-1 gap-7 sm:columns-2 md:gap-8 lg:columns-3 lg:gap-10">
+            <For each={props.project.drawings}>
+              {(src, index) => (
+                <div
+                  class="detail-media mb-7 break-inside-avoid overflow-hidden rounded-xl bg-zinc-900 md:mb-8 lg:mb-10"
+                  style={{ "animation-delay": `${0.2 + index() * 0.1}s` }}
+                >
+                  <img
+                    src={src}
+                    alt={`${props.project.title} - Drawing ${index() + 1}`}
+                    loading="lazy"
+                    class="h-auto w-full object-cover transition-transform duration-700 hover:scale-105"
+                  />
+                </div>
+              )}
+            </For>
+          </div>
+        </div>
+      </Show>
+    </div>
+  );
+}
+
+function ServiceProjectPage(props) {
+  const project = createMemo(() =>
+    serviceProjects.find((item) => item.id === props.slug),
+  );
+
+  return (
+    <Show
+      when={project()}
+      fallback={
+        <main class="flex min-h-screen items-center justify-center bg-[var(--background)] px-[var(--section-pad-x)] text-white">
+          <div class="text-center">
+            <h1 class="mb-4 text-4xl font-bold">Project Not Found</h1>
+            <button
+              type="button"
+              onClick={() => goTo("/#services")}
+              class="text-[var(--accent)] hover:underline"
+            >
+              Back to Services
+            </button>
+          </div>
+        </main>
+      }
+    >
+      {(serviceProject) => (
+        <main class="min-h-screen bg-[var(--background)] pb-20 pt-32">
+          <Navbar />
+          <div class="section-shell pb-20">
+            <div class="section-inner mb-12">
+              <button
+                type="button"
+                onClick={() => backOrFallback("/#services")}
+                class="group flex items-center gap-2 border-none bg-transparent text-sm text-gray-400 transition-colors hover:text-white"
+              >
+                <Icon
+                  name="arrow-left"
+                  size={16}
+                  class="transition-transform group-hover:-translate-x-1"
+                />
+                Back to Services
+              </button>
+            </div>
+            <ProjectDetailContent project={serviceProject()} />
+          </div>
+          <Footer />
         </main>
       )}
     </Show>

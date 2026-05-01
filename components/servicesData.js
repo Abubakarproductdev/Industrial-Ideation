@@ -19,6 +19,11 @@ export const projects = [
       "/BoatDesign/Leisure Boat ZD 12.8 Closed Deck - V2-Upgrade 1 - Image 12.jpg",
       "/BoatDesign/Leisure Boat ZD 12.8 Closed Deck - V2-Upgrade 1 - Image 13.jpg",
       "/BoatDesign/Leisure Boat ZD 12.8 Closed Deck - V2-Upgrade 1 - Image 14.jpg",
+    ],
+    caseStudy: [
+      { title: "Focus", content: "High-end visualization for presentation and product storytelling." },
+      { title: "Work", list: ["Surface modeling review", "Realistic materials", "Lighting and reflection setup", "Presentation-ready camera angles"] },
+      { title: "Outcome", content: "A luxury leisure boat concept shown through a complete visual gallery." }
     ]
   },
   {
@@ -32,6 +37,11 @@ export const projects = [
       "/GreenHouse Design/2.jpg",
       "/GreenHouse Design/3.jpg",
       "/GreenHouse Design/4.jpg",
+    ],
+    caseStudy: [
+      { title: "Goal", content: "Visualize a futuristic greenhouse concept with clear environmental and architectural cues." },
+      { title: "Approach", list: ["Natural-light presentation", "Clean exterior structure", "Realistic landscaping and material balance"] },
+      { title: "Outcome", content: "A clear educational and presentation render set for the greenhouse concept." }
     ]
   },
   {
@@ -45,6 +55,11 @@ export const projects = [
       "/OilMessager/untitled.11.png",
       "/OilMessager/untitled.12.png",
       "/OilMessager/untitled.7.png",
+    ],
+    caseStudy: [
+      { title: "Goal", content: "Combine oil dispensing and massage in one wall-mounted ergonomic product." },
+      { title: "Mechanical Design", list: ["Internal oil chamber", "Controlled flow outlet", "Roller interface for even spreading"] },
+      { title: "Outcome", content: "A concept-ready product layout with clear visual proof of form and function." }
     ]
   },
   {
@@ -57,6 +72,11 @@ export const projects = [
       "/PerfumeBottle/3.JPG",
       "/PerfumeBottle/4.JPG",
       "/PerfumeBottle/5.JPG",
+    ],
+    caseStudy: [
+      { title: "Goal", content: "Create a minimal luxury perfume bottle presentation." },
+      { title: "Design Direction", list: ["Clear glass massing", "Simple cap proportions", "Premium material-focused renders"] },
+      { title: "Confidential Scope", content: "Brand strategy, supplier information, and production dimensions are private." }
     ]
   },
   {
@@ -68,6 +88,11 @@ export const projects = [
     images: [
       "/marker/5.png",
       "/marker/fourth.png",
+    ],
+    caseStudy: [
+      { title: "Goal", content: "Develop an ergonomic marker pen concept for controlled use." },
+      { title: "Design Approach", list: ["Grooved grip for control", "Streamlined barrel shape", "Compact visual profile"] },
+      { title: "Confidential Scope", content: "Internal mechanism drawings and exact dimensions are private." }
     ]
   },
   {
@@ -82,6 +107,11 @@ export const projects = [
       "/spamPackgingDesign/logo of the cap facing forward.png",
       "/spamPackgingDesign/showing off the jerky.png",
       "/spamPackgingDesign/ANIMATION_03.mp4",
+    ],
+    caseStudy: [
+      { title: "Goal", content: "Create packaging that is visually bold and structurally practical." },
+      { title: "Engineering Thinking", list: ["Foldable structure direction", "Mass-production awareness", "Brand-forward product presentation"] },
+      { title: "Outcome", content: "A packaging concept ready for manufacturing and visual storytelling." }
     ]
   },
   {
@@ -94,6 +124,11 @@ export const projects = [
       "/trimmer/first.png",
       "/trimmer/second.png",
       "/trimmer/third.png",
+    ],
+    caseStudy: [
+      { title: "Project Goal", content: "Design a handheld trimmer with a robust mechanical body and intuitive presentation." },
+      { title: "Design Approach", list: ["Compact internal packaging", "Ergonomic grip form", "Premium control and display language"] },
+      { title: "Confidential Scope", content: "Internal mechanisms, dimensions, and electronics details are private." }
     ]
   },
   {
@@ -107,6 +142,11 @@ export const projects = [
       "/waterbottlesleeves/no3.jpeg",
       "/waterbottlesleeves/no4.png",
       "/waterbottlesleeves/resized_image_1920x1080_second.jpeg",
+    ],
+    caseStudy: [
+      { title: "Project Goal", content: "Design protective sleeves for water bottles with production-minded detailing." },
+      { title: "Engineering Approach", list: ["Fit based on bottle proportions", "Flexible material behavior considered", "Grip and insulation value emphasized"] },
+      { title: "Outcome", content: "A practical sleeve concept with visual and production-ready direction." }
     ]
   }
 ];

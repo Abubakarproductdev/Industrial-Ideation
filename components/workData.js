@@ -49,6 +49,12 @@ export const workCategories = {
         coverImage: "/quantum.jpg",
         images: [
           "/quantum.jpg"
+        ],
+        caseStudy: [
+          { title: "Project Goal", content: "Develop a production-minded mold concept for a compact water flosser body with clean external surfacing." },
+          { title: "Engineering Focus", list: ["Parting strategy for molded housing", "Consistent wall thickness for predictable flow", "Clear service and assembly logic for internal parts"] },
+          { title: "Confidential Scope", content: "Detailed mold drawings, internal fit data, and tooling decisions are confidential and are not shown publicly." },
+          { title: "Outcome", content: "A visual portfolio snapshot of a manufacturing-oriented concept prepared for deeper tooling review." }
         ]
       },
       {
@@ -58,6 +64,12 @@ export const workCategories = {
         coverImage: "/2.jpg",
         images: [
           "/2.jpg"
+        ],
+        caseStudy: [
+          { title: "Project Goal", content: "Create an ergonomic wand-style paintbrush form that can move from concept styling toward molded production." },
+          { title: "Design Approach", list: ["Grip form shaped for controlled strokes", "Simple body split suitable for plastic manufacturing", "Rounded surfaces to reduce sharp stress areas"] },
+          { title: "Confidential Scope", content: "Tooling drawings and exact dimensional details are private, so only the presentation render is included." },
+          { title: "Outcome", content: "A clean product concept balancing hand comfort, visual simplicity, and manufacturable geometry." }
         ]
       },
       {
@@ -67,6 +79,12 @@ export const workCategories = {
         coverImage: "/3.jpg",
         images: [
           "/3.jpg"
+        ],
+        caseStudy: [
+          { title: "Project Goal", content: "Prepare complex sheet metal geometry for laser cutting while keeping fabrication practical." },
+          { title: "DFM Focus", list: ["Cut paths arranged for clean profiles", "Bends and edges considered for downstream forming", "Part complexity balanced against fabrication cost"] },
+          { title: "Confidential Scope", content: "Flat patterns, tolerances, and client-specific manufacturing files are confidential." },
+          { title: "Outcome", content: "A fabrication-ready design direction represented publicly through selected portfolio imagery." }
         ]
       },
       {
@@ -76,6 +94,12 @@ export const workCategories = {
         coverImage: "/4.jpg",
         images: [
           "/4.jpg"
+        ],
+        caseStudy: [
+          { title: "Project Goal", content: "Explore a cost-conscious powerbank enclosure using a warm wooden exterior and simplified construction." },
+          { title: "Design Approach", list: ["Minimal external form for a premium feel", "Material choice used to reduce perceived and production cost", "Compact shell planned around internal electronics packaging"] },
+          { title: "Confidential Scope", content: "Internal layout, supplier assumptions, and electrical packaging details are private." },
+          { title: "Outcome", content: "A refined enclosure concept focused on simplicity, tactility, and efficient production." }
         ]
       }
     ]
@@ -140,6 +164,12 @@ export const workCategories = {
         coverImage: "/aether.jpg",
         images: [
           "/aether.jpg"
+        ],
+        caseStudy: [
+          { title: "Goal", content: "Present a cinematic character animation direction with strong motion quality and polished visual staging." },
+          { title: "Creative Work", list: ["Character motion blocking", "Lighting and camera presentation", "Animation polish for a premium studio look"] },
+          { title: "Confidential Scope", content: "Rig files, production scene data, and client animation breakdowns are private." },
+          { title: "Outcome", content: "A public-facing animation snapshot representing the quality of the larger confidential production work." }
         ]
       }
     ]
@@ -177,6 +207,12 @@ export const workCategories = {
         images: [
           "/marker/5.png",
           "/marker/fourth.png"
+        ],
+        caseStudy: [
+          { title: "Project Goal", content: "Design a marker that can protect the nib without relying on a removable cap." },
+          { title: "Mechanical Idea", list: ["Auto-sealing front mechanism", "Compact internal sliding or shutter movement", "User-friendly one-piece daily carry form"] },
+          { title: "Confidential Scope", content: "Internal mechanism drawings and seal geometry are confidential, so only external visuals are shown." },
+          { title: "Outcome", content: "A practical marker concept focused on convenience, ink protection, and reduced lost-cap frustration." }
         ]
       },
       {
@@ -206,6 +242,12 @@ export const workCategories = {
           "/PerfumeBottle/3.JPG",
           "/PerfumeBottle/4.JPG",
           "/PerfumeBottle/5.JPG"
+        ],
+        caseStudy: [
+          { title: "Goal", content: "Create a perfume bottle presentation that feels minimal, premium, and shelf-ready." },
+          { title: "Design Direction", list: ["Clear glass massing for luxury cues", "Simple cap and shoulder proportions", "Presentation visuals focused on material and silhouette"] },
+          { title: "Confidential Scope", content: "Brand strategy, packaging dimensions, and supplier details are private." },
+          { title: "Outcome", content: "A refined fragrance bottle concept with restrained styling and premium material emphasis." }
         ]
       },
       {
@@ -215,6 +257,12 @@ export const workCategories = {
         coverImage: "/5.jpg",
         images: [
           "/5.jpg"
+        ],
+        caseStudy: [
+          { title: "Project Goal", content: "Create a compact 3D printed clamp that can mount securely around a window interface using an ArcaSwiss-style plate." },
+          { title: "Design Focus", list: ["Strong clamping geometry", "Compact printed form", "Mounting interface alignment for camera or accessory use"] },
+          { title: "Confidential Scope", content: "Exact dimensions, clamp force targets, and print settings are private." },
+          { title: "Outcome", content: "A functional prototype concept intended for quick iteration and real-world mounting tests." }
         ]
       },
       {
@@ -228,6 +276,12 @@ export const workCategories = {
         ],
         drawings: [
           "/Brush/drawings.png"
+        ],
+        caseStudy: [
+          { title: "Project Goal", content: "Design a premium heated hair brush with boar bristle styling cues and a manufacturable handheld body." },
+          { title: "Engineering Approach", list: ["Handle geometry shaped for grip comfort", "Brush head planned around bristle placement and heat distribution", "Assembly layout supported by drawing documentation"] },
+          { title: "Drawings", content: "A public drawing sheet is included to show the design intent without exposing every private production detail." },
+          { title: "Outcome", content: "A polished grooming product concept with visual styling, CAD direction, and supporting drawings." }
         ]
       },
       {
@@ -238,7 +292,16 @@ export const workCategories = {
         images: [
           "/Car Trash Can/image.png",
           "/Car Trash Can/small.png",
+          "/Car Trash Can/WhatsApp Image 2025-05-28 at 11.21.27 PM (1).jpeg",
+          "/Car Trash Can/WhatsApp Image 2025-05-28 at 11.21.29 PM (1).jpeg",
+          "/Car Trash Can/WhatsApp Image 2025-05-28 at 11.21.29 PM.jpeg",
           "/Car Trash Can/WhatsApp Video 2025-05-18 at 12.27.19 AM.mp4"
+        ],
+        caseStudy: [
+          { title: "Project Goal", content: "Design a compact waterproof trash bin suited for automotive interiors and daily use." },
+          { title: "Design Approach", list: ["Space-efficient body for car placement", "Water-resistant containment for spills and waste", "Easy access and removal for cleaning"] },
+          { title: "Confidential Scope", content: "Detailed drawings, sealing specs, and production dimensions are private, so the public detail focuses on visual and functional evidence." },
+          { title: "Outcome", content: "A practical car accessory concept supported by product renders, reference photos, and motion media." }
         ]
       },
       {
@@ -248,6 +311,12 @@ export const workCategories = {
         coverImage: "/miswak holder/2.png",
         images: [
           "/miswak holder/2.png"
+        ],
+        caseStudy: [
+          { title: "Project Goal", content: "Create a hygienic holder for carrying and storing miswak while keeping the form simple and portable." },
+          { title: "Design Approach", list: ["Slim protective body", "Ventilation and cleanliness considered for daily use", "Minimal exterior form for pocket or bag carry"] },
+          { title: "Confidential Scope", content: "Internal dimensions and closure details are private because no public drawing package is attached." },
+          { title: "Outcome", content: "A compact holder concept focused on hygiene, portability, and clean everyday use." }
         ]
       },
       {
@@ -262,6 +331,12 @@ export const workCategories = {
         ],
         drawings: [
           "/golf Pudding pRACTICE TOOL/DRAWING.png"
+        ],
+        caseStudy: [
+          { title: "Project Goal", content: "Develop a physical practice aid that helps golfers build more consistent putting alignment and stroke control." },
+          { title: "Prototype Approach", list: ["Ground-contact form for repeatable positioning", "Simple training geometry visible in product renders", "Drawing sheet used to communicate the core mechanical idea"] },
+          { title: "Drawings", content: "A public drawing is included for concept clarity while detailed tolerances and manufacturing notes remain private." },
+          { title: "Outcome", content: "A prototype-ready putting tool concept with visuals and drawing support." }
         ]
       },
       {
@@ -273,7 +348,14 @@ export const workCategories = {
           "/child infant chair/1.png",
           "/child infant chair/2.png",
           "/child infant chair/3.png",
-          "/child infant chair/4.png"
+          "/child infant chair/4.png",
+          "/child infant chair/new (1).mp4"
+        ],
+        caseStudy: [
+          { title: "Project Goal", content: "Prototype a smart infant care chair concept with a supportive form and integrated product-style presentation." },
+          { title: "Design Approach", list: ["Stable chair structure for infant support", "Soft visual language suited to care environments", "Media set expanded with video to show the concept more clearly"] },
+          { title: "Confidential Scope", content: "Sensor layout, safety validation, electronics, and exact dimensions are confidential and not included publicly." },
+          { title: "Outcome", content: "A smart care product concept represented through multiple renders and a video preview." }
         ]
       }
     ]
