@@ -861,9 +861,9 @@ function Services(props) {
 
 function ServicesGallery(props) {
   const focusRadius = 1.2;
-  const focusWidthBoost = 20;
-  const baseWidth = 7;
-  const gap = 1.2;
+  const focusWidthBoost = 16;
+  const baseWidth = 6;
+  const gap = 1;
 
   const strips = createMemo(() => {
     const total = props.items.length;
