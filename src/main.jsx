@@ -633,10 +633,7 @@ function Hero() {
       <div class="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 animate-[fadeIn_1s_ease-out_2s_forwards] flex-col items-center gap-3 opacity-0 md:bottom-12">
        
         <div class="glass flex h-12 w-8 justify-center rounded-full border border-[var(--surface-border)] p-2">
-          <div class="scroll-arrow">
-            <Icon name="move-down" size={14} class="text-[var(--accent)]" />
-          </div>Instagram
-
+         
         </div>
       </div>
     </section>
