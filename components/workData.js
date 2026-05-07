@@ -106,7 +106,7 @@ export const workCategories = {
   },
   "blender-studio": {
     title: "Blender Studio",
-    description: "High-quality rendering, texturing, 3D visualization, and character animation.",
+    description: "High-quality renderings and animations created using Blender — showcasing a range of projects from product visualization to character animation and environmental design.",
     projects: [
       {
         id: "greenhouse",
