@@ -854,8 +854,8 @@ function Services(props) {
 }
 
 function ServicesGallery(props) {
-  const focusRadius = 1.8;
-  const focusWidthBoost = 10;
+  const focusRadius = 1.2;
+  const focusWidthBoost = 14;
   const baseWidth = 6;
   const gap = 1;
 
