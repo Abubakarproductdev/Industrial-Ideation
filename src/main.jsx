@@ -599,7 +599,7 @@ function Hero() {
             delay={0.2}
             class="max-w-5xl text-5xl font-bold leading-tight tracking-tight md:text-7xl lg:text-8xl"
           >
-            We Build Ideas That  Move Industries.
+            We Build and test Ideas That  Move Industries
           </TextReveal>
 
           <TextReveal
@@ -630,12 +630,6 @@ function Hero() {
         </div>
       </div>
 
-      <div class="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 animate-[fadeIn_1s_ease-out_2s_forwards] flex-col items-center gap-3 opacity-0 md:bottom-12">
-       
-        <div class="glass flex h-12 w-8 justify-center rounded-full border border-[var(--surface-border)] p-2">
-         
-        </div>
-      </div>
     </section>
   );
 }
@@ -1495,7 +1489,8 @@ function ServiceProjectPage(props) {
             <h1 class="mb-4 text-4xl font-bold">Project Not Found</h1>
             <button
               type="button"
-              onClick={() => goTo("/#services")}
+             href="/"
+             onClick={event=>handleNav(event, "/")}
               class="text-[var(--accent)] hover:underline"
             >
               Back to Services
