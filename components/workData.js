@@ -166,7 +166,7 @@ export const workCategories = {
           "/aether.jpg"
         ],
         caseStudy: [
-          { title: "Goal", content: "Present a cinematic character animation direction with strong motion quality and polished visual staging." },
+          { title: "Goal", content: "Present a cinematic character animation direction and polished visual staging." },
           { title: "Creative Work", list: ["Character motion blocking", "Lighting and camera presentation", "Animation polish for a premium studio look"] },
           { title: "Confidential Scope", content: "Rig files, production scene data, and client animation breakdowns are private." },
           { title: "Outcome", content: "A public-facing animation snapshot representing the quality of the larger confidential production work." }
