@@ -334,7 +334,7 @@ export const workCategories = {
         ],
         caseStudy: [
           { title: "Project Goal", content: "Develop a physical practice aid that helps golfers build more consistent putting alignment and stroke control." },
-          { title: "Prototype Approach", list: ["Ground-contact form for repeatable positioning", "Simple training geometry visible in product renders", "Drawing sheet used to communicate the core mechanical idea"] },
+          { title: "Prototype Approach", list: ["Ground-contact for reliable poistioning", "Simple training geometry visible in product renders", "Drawing sheet used to communicate the core mechanical idea"] },
           { title: "Drawings", content: "A public drawing is included for concept clarity while detailed tolerances and manufacturing notes remain private." },
           { title: "Outcome", content: "A prototype-ready putting tool concept with visuals and drawing support." }
         ]
