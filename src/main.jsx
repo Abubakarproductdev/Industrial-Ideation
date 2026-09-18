@@ -17,6 +17,11 @@ import "./styles.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ── SPA navigation state ──────────────────────────────────────────────
+let spaNavCount = 0;       // tracks how many pushState calls we've made
+let _programmaticNav = false; // flag to distinguish programmatic vs browser nav
+let hasShownPreloader = false; // only show the preloader on first visit
+
 const selectedWork = [
   {
     title: "Industrial Manufacturing Designs",
@@ -75,7 +80,6 @@ const testimonials = [
   },
 ];
 
-const contactEmail = "hello@industrialideation.com";
 
 function cx(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -135,8 +139,11 @@ function goTo(url) {
     return;
   }
 
+  spaNavCount++;
+  _programmaticNav = true;
   window.history.pushState({}, "", `${next.pathname}${next.search}${next.hash}`);
   window.dispatchEvent(new PopStateEvent("popstate"));
+  _programmaticNav = false;
 
   if (next.hash) {
     requestAnimationFrame(() => {
@@ -154,8 +161,10 @@ function replaceUrl(url) {
     return;
   }
 
+  _programmaticNav = true;
   window.history.replaceState({}, "", `${next.pathname}${next.search}${next.hash}`);
   window.dispatchEvent(new PopStateEvent("popstate"));
+  _programmaticNav = false;
 }
 
 function buildModalUrl(projectId) {
@@ -175,10 +184,8 @@ function currentProjectFromSearch(items, search = window.location.search) {
 }
 
 function backOrFallback(fallbackUrl) {
-  const hasSameOriginReferrer =
-    !!document.referrer && new URL(document.referrer).origin === window.location.origin;
-
-  if (window.history.length > 1 && hasSameOriginReferrer) {
+  if (spaNavCount > 0) {
+    spaNavCount--;
     window.history.back();
     return;
   }
@@ -203,12 +210,18 @@ function App() {
   });
 
   onMount(() => {
-    const updateRoute = () =>
+    const updateRoute = () => {
+      // If this is a browser back/forward (not our own pushState/replaceState),
+      // keep spaNavCount in sync so backOrFallback works correctly.
+      if (!_programmaticNav && spaNavCount > 0) {
+        spaNavCount--;
+      }
       setLocation({
         path: window.location.pathname,
         hash: window.location.hash,
         search: window.location.search,
       });
+    };
     window.addEventListener("popstate", updateRoute);
     window.addEventListener("hashchange", updateRoute);
     onCleanup(() => {
@@ -291,12 +304,17 @@ function SmoothScroll(props) {
 }
 
 function Home(props) {
-  const [loading, setLoading] = createSignal(true);
+  const [loading, setLoading] = createSignal(!hasShownPreloader);
+
+  const handlePreloaderComplete = () => {
+    hasShownPreloader = true;
+    setLoading(false);
+  };
 
   return (
     <>
       <Show when={loading()}>
-        <Preloader onComplete={() => setLoading(false)} />
+        <Preloader onComplete={handlePreloaderComplete} />
       </Show>
       <main
         class={cx(
@@ -453,19 +471,6 @@ function Navbar() {
             </For>
           </div>
 
-          <div class="hidden md:block">
-            <a
-              href={`mailto:${contactEmail}`}
-              class={cx(
-                "inline-flex items-center justify-center rounded-full px-6 py-2.5 text-sm font-medium transition-all duration-300",
-                scrolled()
-                  ? "bg-white text-black hover:bg-black"
-                  : "border border-white/20 bg-black text-white backdrop-blur-sm hover:bg-white hover:text-black",
-              )}
-            >
-              Start Project
-            </a>
-          </div>
 
           <div class="relative z-50 flex items-center md:hidden">
             <button
@@ -494,13 +499,7 @@ function Navbar() {
                 </a>
               )}
             </For>
-            <a
-              href={`mailto:${contactEmail}`}
-              class="mobile-link mt-6 inline-block rounded-full bg-white px-8 py-3 text-lg font-medium text-black transition-transform active:scale-95"
-              style={{ "animation-delay": "0.5s" }}
-            >
-              Start Project
-            </a>
+
           </div>
         </div>
       </Show>
@@ -618,14 +617,7 @@ function Hero() {
             >
               View Our Work
             </MagneticButton>
-            <MagneticButton
-              onClick={() => {
-                window.location.href = `mailto:${contactEmail}`;
-              }}
-              class="glass w-full rounded-full px-8 py-4 font-medium text-white hover:bg-[var(--surface-border)] sm:w-auto md:px-10 md:py-5"
-            >
-              Start a project
-            </MagneticButton>
+
           </div>
         </div>
       </div>
@@ -896,7 +888,7 @@ function ServicesGallery(props) {
       <For each={strips()}>
         {({ item, width, x, focus }, index) => (
           <button
-            class="service-strip absolute left-1/2 top-1/2 overflow-hidden bg-zinc-900"
+            class="service-strip group absolute left-1/2 top-1/2 overflow-hidden bg-zinc-900 hover:z-10"
             style={{
               width: `${width}vw`,
               height: `${62 + focus * 16}vh`,
@@ -917,6 +909,14 @@ function ServicesGallery(props) {
               loading={index() < 2 ? "eager" : "lazy"}
               class="h-full w-full object-cover"
             />
+
+            {/* Glass "Explore Now" button — visible only on hover */}
+            <div class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100">
+              <div class="flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-7 py-3.5 text-sm font-medium tracking-wide text-white shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+                Explore Now
+                <Icon name="arrow-up-right" size={16} />
+              </div>
+            </div>
           </button>
         )}
       </For>
