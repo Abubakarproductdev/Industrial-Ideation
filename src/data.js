@@ -50,7 +50,7 @@ export const projects = [
     tag: "packaging",
     description:
       "A bold, modern take on traditional packaging — revitalising the brand identity with vibrant graphics and practical, consumer-friendly structure.",
-    cover: "/spamPackgingDesign/CLOSE UP.png",
+    cover: "/spamPackgingDesign/showing off the jerky.png",
     media: [
       "/spamPackgingDesign/CLOSE UP.png",
       "/spamPackgingDesign/ANIMATION_03.mp4",
@@ -83,22 +83,6 @@ export const projects = [
       { title: "Goal", content: "Visually explain the greenhouse effect." },
       { title: "Approach", list: ["Scene showing heat trapping", "Light simulation for clarity", "Realistic landscaping and material balance"] },
       { title: "Outcome", content: "A clear educational and presentation render set." },
-    ],
-  },
-  {
-    slug: "character-animations",
-    title: "Detailed Character Animations",
-    category: "rendering",
-    tag: "animation",
-    description:
-      "High-end animation work showcasing fluid motion, rigging and cinematic storytelling.",
-    cover: "/aether.jpg",
-    media: ["/aether.jpg"],
-    caseStudy: [
-      { title: "Goal", content: "Present a cinematic animation direction and polished visual staging." },
-      { title: "Creative Work", list: ["Motion blocking", "Lighting and camera presentation", "Animation polish for a premium studio look"] },
-      { title: "Confidential Scope", content: "Rig files, production scene data and client animation breakdowns are private." },
-      { title: "Outcome", content: "A public-facing snapshot representing the quality of the larger confidential production work." },
     ],
   },
 
@@ -186,7 +170,7 @@ export const projects = [
     tag: "product",
     description:
       "A wall-mounted oil sprayer combining oil dispensing and massage in one ergonomic device, with a precision dispenser for controlled application.",
-    cover: "/OilMessager/untitled.12.png",
+    cover: "/OilMessager/untitled.10.png",
     media: [
       "/OilMessager/untitled.12.png",
       "/OilMessager/untitled.10.png",
@@ -202,29 +186,13 @@ export const projects = [
     ],
   },
   {
-    slug: "capless-marker",
-    title: "Capless Marker",
-    category: "prototype",
-    tag: "product",
-    description:
-      "An innovative capless marker with an auto-sealing mechanism that prevents the ink from drying.",
-    cover: "/studio/marker-2.jpg",
-    media: ["/studio/marker-2.jpg", "/studio/marker-1.jpg"],
-    caseStudy: [
-      { title: "Project Goal", content: "Protect the nib without relying on a removable cap." },
-      { title: "Mechanical Idea", list: ["Auto-sealing front mechanism", "Compact internal sliding / shutter movement", "User-friendly one-piece everyday form"] },
-      { title: "Confidential Scope", content: "Internal mechanism drawings and seal geometry are confidential, so only external visuals are shown." },
-      { title: "Outcome", content: "A practical marker focused on convenience, ink protection and no more lost caps." },
-    ],
-  },
-  {
     slug: "smart-infant-chair",
     title: "Smart Infant Care Chair",
     category: "prototype",
     tag: "product",
     description:
       "A smart infant care chair concept with integrated sensors and ergonomic support for child safety.",
-    cover: "/child infant chair/3.png",
+    cover: "/child infant chair/1.png",
     media: [
       "/child infant chair/3.png",
       "/child infant chair/new (1).mp4",
@@ -411,14 +379,12 @@ const tiles = {
   "boat-design": ["dark", "wide", "3D Visualisation · Rendering"],
   "spam-packaging": ["light", "tall", "Packaging · Rendering"],
   greenhouse: ["dark", "wide", "Architecture · Rendering"],
-  "character-animations": ["dark", "square", "Animation · Rendering"],
   "autofade-trimmer": ["dark", "wide", "Product Design · Mechanism"],
   "perfume-bottle": ["light", "tall", "Product Design · Glass"],
   "heated-hair-brush": ["light", "wide", "Product Design · Drawings"],
   "waterproof-trash-can": ["light", "tall", "Product Design · Automotive"],
   "oil-massager": ["dark", "square", "Product Design · Mechanism"],
-  "capless-marker": ["light", "wide", "Product Design · Mechanism"],
-  "smart-infant-chair": ["light", "tall", "Product Design · Prototype"],
+  "smart-infant-chair": ["light", "wide", "Product Design · Prototype"],
   "golf-putting-tool": ["dark", "wide", "Prototype · Drawings"],
   "window-clamp-arcaswiss": ["dark", "tall", "Prototype · 3D Printing"],
   "miswak-holder": ["dark", "square", "Product Design · Everyday Carry"],
@@ -452,8 +418,8 @@ export const featured = [
   { slug: "autofade-trimmer", size: "full" },
   { slug: "water-bottle-sleeves", size: "tall" },
   { slug: "oil-massager", size: "wide" },
-  { slug: "smart-infant-chair", size: "tall" },
-  { slug: "capless-marker", size: "full" },
+  { slug: "smart-infant-chair", size: "wide", fixed: true },
+  { slug: "retractable-marker", size: "full" },
 ];
 
 export const getProject = (slug) => projects.find((p) => p.slug === slug);
