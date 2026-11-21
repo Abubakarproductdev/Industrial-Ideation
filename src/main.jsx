@@ -58,9 +58,10 @@ const lenis = reducedMotion
       __experimental__naiveDimensions: true,
     });
 
+const lenisTick = (time) => lenis.raf(time * 1000);
 if (lenis) {
   lenis.on("scroll", ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.add(lenisTick);
   gsap.ticker.lagSmoothing(0);
 }
 
@@ -1167,4 +1168,19 @@ function Footer() {
   );
 }
 
-render(() => <App />, document.getElementById("root"));
+const root = document.getElementById("root");
+root.textContent = ""; // never stack a second copy of the site
+const dispose = render(() => <App />, root);
+
+// Dev only: when this file hot-reloads, tear the old app down first —
+// otherwise a second full site (video hero included) appears after the footer.
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => {
+    dispose();
+    ScrollTrigger.getAll().forEach((t) => t.kill());
+    if (lenis) {
+      gsap.ticker.remove(lenisTick);
+      lenis.destroy();
+    }
+  });
+}
