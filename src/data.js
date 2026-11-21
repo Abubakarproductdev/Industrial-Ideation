@@ -32,7 +32,10 @@ export const projects = [
     tag: "rendering",
     description:
       "An exceptional leisure boat featuring a closed deck design, prioritising both aerodynamics and passenger comfort. Model V2-Upgrade 1 showcases refined hull lines and a modern aesthetic suited for luxury cruising.",
-    cover: boat(14),
+    cover: boat(1),
+    // very wide render: show it whole on its own grey instead of cropping
+    fit: "contain",
+    plate: "#acacac",
     media: [
       boat(1), boat("2-B"), boat(3), boat(4), boat(5), boat(7), boat(8),
       boat(9), boat(10), boat(11), boat(12), boat(13), boat(14),
@@ -376,7 +379,7 @@ export const projects = [
 // shape: tile proportion in the Portfolio grid — tall (4:5), square, wide (3:2)
 // discipline: line that fades in at the bottom of a tile on hover
 const tiles = {
-  "boat-design": ["dark", "wide", "3D Visualisation · Rendering"],
+  "boat-design": ["light", "wide", "3D Visualisation · Rendering"],
   "spam-packaging": ["light", "tall", "Packaging · Rendering"],
   greenhouse: ["dark", "wide", "Architecture · Rendering"],
   "autofade-trimmer": ["dark", "wide", "Product Design · Mechanism"],

@@ -504,52 +504,39 @@ function Home() {
   );
 }
 
-// Portrait screens get the 9:16 cut of the reel; follows rotation/resizes
-const portraitQuery = window.matchMedia("(max-aspect-ratio: 1/1)");
-const [portrait, setPortrait] = createSignal(portraitQuery.matches);
-portraitQuery.addEventListener("change", (e) => setPortrait(e.matches));
-const reelBase = () =>
-  portrait()
-    ? "/hero/industrial-ideation-hero-mobile-1080x1920"
-    : "/hero/industrial-ideation-hero-1920x1080";
-const reelPoster = () =>
-  portrait()
-    ? "/hero/industrial-ideation-hero-poster-mobile-1080x1920.jpg"
-    : "/hero/industrial-ideation-hero-poster-1920x1080.jpg";
+// ── Hero slideshow: every project thumbnail, one after another ──────
+const SLIDE_MS = 2000;
+// Featured projects first (in their home-page order), then the rest
+const heroSlides = [
+  ...featured.map((f) => getProject(f.slug)).filter(Boolean),
+  ...projects.filter((p) => !featured.some((f) => f.slug === p.slug)),
+];
 
 function Reel() {
   let section;
   let inner;
   let shade;
   let meta;
-  let video;
+  const [index, setIndex] = createSignal(0);
+  const [visible, setVisible] = createSignal(true);
+  const n = heroSlides.length;
+  // only the current, previous and next images are loaded
+  const near = (i) => {
+    const d = (i - index() + n) % n;
+    return d <= 1 || d === n - 1;
+  };
 
   onMount(() => {
-    video.muted = true;
-    video.defaultMuted = true;
-    if (!reducedMotion) video.play().catch(() => {});
-
-    // Pause the reel while it's off-screen
-    const io = new IntersectionObserver(([entry]) => {
-      if (reducedMotion) return;
-      if (entry.isIntersecting) video.play().catch(() => {});
-      else video.pause();
-    });
+    const io = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting));
     io.observe(section);
     onCleanup(() => io.disconnect());
-  });
 
-  // Swap to the other cut when the screen changes orientation
-  createEffect(
-    on(
-      portrait,
-      () => {
-        video.load();
-        if (!reducedMotion) video.play().catch(() => {});
-      },
-      { defer: true },
-    ),
-  );
+    if (reducedMotion) return; // no auto-advancing for reduced motion
+    const timer = setInterval(() => {
+      if (visible() && !document.hidden) setIndex((i) => (i + 1) % n);
+    }, SLIDE_MS);
+    onCleanup(() => clearInterval(timer));
+  });
 
   useGsap(
     () => section,
@@ -571,23 +558,31 @@ function Reel() {
     },
   );
 
+  const current = () => heroSlides[index()];
+
   return (
-    <section class="reel" ref={section} aria-label="Industrial Ideation showreel">
+    <section class="reel" ref={section} aria-label="Industrial Ideation project slideshow">
       <div class="reel__inner" ref={inner}>
-        <video
-          ref={video}
-          class="reel__video"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="auto"
-          poster={reelPoster()}
-          aria-hidden="true"
-        >
-          <source src={`${reelBase()}.webm`} type="video/webm" />
-          <source src={`${reelBase()}.mp4`} type="video/mp4" />
-        </video>
+        <For each={heroSlides}>
+          {(p, i) => (
+            <div
+              class="reel__slide"
+              classList={{ "is-active": i() === index() }}
+              style={p.plate ? { "background-color": p.plate } : undefined}
+              aria-hidden="true"
+            >
+              <img
+                srcset={near(i()) ? srcSet(p.cover) : undefined}
+                sizes="100vw"
+                src={near(i()) ? asset(p.cover) : undefined}
+                classList={{ "is-contain": p.fit === "contain" }}
+                alt=""
+                decoding="async"
+                fetchpriority={i() === 0 ? "high" : "auto"}
+              />
+            </div>
+          )}
+        </For>
       </div>
       <div class="reel__shade" ref={shade} />
       <div class="reel__meta" ref={meta}>
@@ -596,6 +591,16 @@ function Reel() {
           <br />
           &amp; engineering studio
         </p>
+        <a
+          href={`/portfolio/${current().slug}`}
+          class="reel__now"
+          onClick={onLinkClick}
+        >
+          <span class="reel__count">
+            {String(index() + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
+          </span>
+          <span class="reel__title">{current().title}</span>
+        </a>
         <button
           type="button"
           class="reel__scroll"
@@ -750,8 +755,9 @@ function Tile(props) {
       onMouseEnter={measure}
       use:reveal={props.delay ?? 0}
     >
-      <div class="tile__media">
+      <div class="tile__media" style={p.plate ? { "background-color": p.plate } : undefined}>
         <img
+          classList={{ "is-contain": p.fit === "contain" }}
           srcset={srcSet(p.cover)}
           sizes={props.sizes ?? "(max-width: 799px) 100vw, 50vw"}
           src={asset(p.cover)}
