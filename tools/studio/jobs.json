@@ -1,0 +1,139 @@
+[
+ {
+  "out": "perfume-1",
+  "src": "PerfumeBottle/3.JPG",
+  "aspect": 0.8,
+  "family": "paper",
+  "fill": 0.6
+ },
+ {
+  "out": "perfume-2",
+  "src": "PerfumeBottle/4.JPG",
+  "aspect": 0.8,
+  "family": "paper",
+  "fill": 0.6
+ },
+ {
+  "out": "perfume-3",
+  "src": "PerfumeBottle/5.JPG",
+  "aspect": 1.5,
+  "family": "paper",
+  "fill": 0.62
+ },
+ {
+  "out": "brush-1",
+  "src": "Brush/main.png",
+  "aspect": 1.5,
+  "family": "paper",
+  "fill": 0.78
+ },
+ {
+  "out": "trash-1",
+  "src": "Car Trash Can/small.png",
+  "aspect": 0.8,
+  "family": "paper",
+  "fill": 0.58
+ },
+ {
+  "out": "sleeve-1",
+  "src": "waterbottlesleeves/no2.png",
+  "aspect": 0.8,
+  "family": "paper",
+  "fill": 0.6
+ },
+ {
+  "out": "sleeve-2",
+  "src": "waterbottlesleeves/no3.jpeg",
+  "aspect": 0.8,
+  "family": "paper",
+  "fill": 0.6,
+  "bbox": [
+   0.37,
+   0.12,
+   0.64,
+   0.95
+  ],
+  "feather": 0.12
+ },
+ {
+  "out": "sleeve-3",
+  "src": "waterbottlesleeves/no4.png",
+  "aspect": 0.8,
+  "family": "paper",
+  "fill": 0.62
+ },
+ {
+  "out": "sleeve-4",
+  "src": "waterbottlesleeves/resized_image_1920x1080_second.jpeg",
+  "aspect": 0.8,
+  "family": "paper",
+  "fill": 0.6,
+  "bbox": [
+   0.32,
+   0.18,
+   0.63,
+   0.89
+  ]
+ },
+ {
+  "out": "marker-1",
+  "src": "marker/5.png",
+  "aspect": 1.7778,
+  "family": "paper",
+  "fill": 0.72,
+  "mode": "crop"
+ },
+ {
+  "out": "marker-2",
+  "src": "marker/fourth.png",
+  "aspect": 1.7778,
+  "family": "paper",
+  "fill": 0.72,
+  "mode": "crop"
+ },
+ {
+  "out": "trimmer-1",
+  "src": "trimmer/first.png",
+  "aspect": 1.7778,
+  "family": "graphite",
+  "match": true,
+  "level": 1.12,
+  "fill": 0.8,
+  "mode": "crop"
+ },
+ {
+  "out": "trimmer-2",
+  "src": "trimmer/second.png",
+  "aspect": 1.7778,
+  "family": "graphite",
+  "match": true,
+  "level": 1.12,
+  "fill": 0.8,
+  "mode": "crop"
+ },
+ {
+  "out": "trimmer-3",
+  "src": "trimmer/third.png",
+  "aspect": 1.7778,
+  "family": "graphite",
+  "match": true,
+  "level": 1.12,
+  "fill": 0.8,
+  "mode": "crop"
+ },
+ {
+  "out": "oil-1",
+  "src": "OilMessager/untitled.7.png",
+  "aspect": 1.5,
+  "family": "paper",
+  "fill": 0.5
+ },
+ {
+  "out": "chair-1",
+  "src": "child infant chair/4.png",
+  "aspect": 1.5,
+  "family": "cool",
+  "fill": 0.7,
+  "mode": "crop"
+ }
+]
