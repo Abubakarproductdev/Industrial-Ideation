@@ -453,9 +453,21 @@ function Menu(props) {
 // ── Home ──────────────────────────────────────────────────────────────
 function Home() {
   usePageTitle(null);
-  const rows = featured
-    .map((f) => ({ ...f, project: getProject(f.slug) }))
-    .filter((f) => f.project);
+  const twoCols = useMedia("(min-width: 800px)");
+  // Group the featured list into full-width tiles and runs of half tiles
+  const blocks = [];
+  for (const f of featured) {
+    const project = getProject(f.slug);
+    if (!project) continue;
+    if (f.size === "full") {
+      blocks.push({ full: project });
+    } else {
+      const item = { project, shape: f.size, ar: SHAPE_AR[f.size], fixed: !!f.fixed };
+      const last = blocks[blocks.length - 1];
+      if (last?.halves) last.halves.push(item);
+      else blocks.push({ halves: [item] });
+    }
+  }
   return (
     <main class="route">
       <Reel />
@@ -469,16 +481,19 @@ function Home() {
               <Icon name="arrow-right" size={14} />
             </Link>
           </div>
-          <div class="feature-grid">
-            <For each={rows}>
-              {(f, i) => (
-                <Tile
-                  project={f.project}
-                  class={`ar-${f.size} span-${f.size === "full" ? "full" : "half"}${f.align === "right" ? " span-right" : ""}`}
-                  eager={i() < 1}
-                  sizes={f.size === "full" ? "100vw" : "(max-width: 799px) 100vw, 50vw"}
-                />
-              )}
+          <div class="feature">
+            <For each={blocks}>
+              {(block, b) =>
+                block.full ? (
+                  <Tile project={block.full} class="ar-full" eager={b() === 0} sizes="100vw" />
+                ) : (
+                  <Masonry
+                    cols={twoCols() ? 2 : 1}
+                    items={block.halves}
+                    sizes="(max-width: 799px) 100vw, 50vw"
+                  />
+                )
+              }
             </For>
           </div>
         </section>
@@ -666,6 +681,54 @@ function About() {
   );
 }
 
+// ── Masonry (gap-free columns) ────────────────────────────────────────
+function useMedia(query) {
+  const mq = window.matchMedia(query);
+  const [matches, setMatches] = createSignal(mq.matches);
+  const onChange = (e) => setMatches(e.matches);
+  mq.addEventListener("change", onChange);
+  onCleanup(() => mq.removeEventListener("change", onChange));
+  return matches;
+}
+
+const SHAPE_AR = { tall: 0.8, square: 1, wide: 1.5 };
+
+// Items go into the currently shortest column (by aspect-ratio height),
+// so columns stay balanced. Columns stretch to equal height in CSS and the
+// non-fixed tiles of shorter columns grow slightly — no white gaps.
+function Masonry(props) {
+  const columns = createMemo(() => {
+    const cols = Array.from({ length: props.cols }, () => ({ h: 0, items: [] }));
+    props.items.forEach((item, i) => {
+      const target = cols.reduce((a, b) => (b.h < a.h - 1e-6 ? b : a));
+      target.items.push({ ...item, i });
+      target.h += 1 / item.ar;
+    });
+    return cols;
+  });
+  return (
+    <div class="masonry" style={{ "--cols": props.cols }}>
+      <For each={columns()}>
+        {(col, c) => (
+          <div class="masonry__col">
+            <For each={col.items}>
+              {(item, r) => (
+                <Tile
+                  project={item.project}
+                  class={`ar-${item.shape}${item.fixed ? " is-fixed" : ""}`}
+                  eager={item.i < (props.eagerCount ?? 0)}
+                  delay={c() * 70 + r() * 20}
+                  sizes={props.sizes}
+                />
+              )}
+            </For>
+          </div>
+        )}
+      </For>
+    </div>
+  );
+}
+
 // ── Work tile (shared by Featured Work and Portfolio) ────────────────
 function Tile(props) {
   const p = props.project;
@@ -720,6 +783,10 @@ function Tile(props) {
 function PortfolioPage() {
   usePageTitle("Portfolio");
   const [query, setQuery] = createSignal("");
+  const four = useMedia("(min-width: 1101px)");
+  const three = useMedia("(min-width: 800px)");
+  const two = useMedia("(min-width: 521px)");
+  const cols = () => (four() ? 4 : three() ? 3 : two() ? 2 : 1);
   const tabs = [
     { id: "all", label: "All" },
     { id: "manufacturing", label: "Manufacturing" },
@@ -799,23 +866,19 @@ function PortfolioPage() {
           </div>
         }
       >
-        <Show when={active()} keyed>
-          {() => (
-            <div class="all-grid">
-              <For each={items()}>
-                {(p, i) => (
-                  <Tile
-                    project={p}
-                    class={`ar-${p.shape}`}
-                    eager={i() < 4}
-                    delay={(i() % 4) * 60}
-                    sizes="(max-width: 520px) 100vw, (max-width: 799px) 50vw, (max-width: 1100px) 33vw, 25vw"
-                  />
-                )}
-              </For>
-            </div>
-          )}
-        </Show>
+        <div class="all-grid">
+          <Masonry
+            cols={cols()}
+            items={items().map((p) => ({
+              project: p,
+              shape: p.shape,
+              ar: SHAPE_AR[p.shape],
+              fixed: p.shape === "wide", // wide shots crop badly when stretched
+            }))}
+            eagerCount={4}
+            sizes="(max-width: 520px) 100vw, (max-width: 799px) 50vw, (max-width: 1100px) 33vw, 25vw"
+          />
+        </div>
       </Show>
     </main>
   );

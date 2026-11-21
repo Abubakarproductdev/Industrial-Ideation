@@ -455,28 +455,32 @@ button {
   color: var(--muted);
 }
 
-.feature-grid,
+.feature,
 .all-grid {
-  display: grid;
-  align-items: start; /* shorter tiles leave white space, by design */
+  display: flex;
+  flex-direction: column;
   gap: var(--tile-gap);
   padding: 0 var(--tile-gap);
 }
-.feature-grid {
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-}
-.span-full {
-  grid-column: 1 / -1;
-}
-.span-half {
-  grid-column: span 6;
-}
-.span-right {
-  grid-column: 7 / span 6;
-}
 
-.all-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+/* Gap-free masonry: columns stretch to equal height, tiles in shorter
+   columns grow to fill (except .is-fixed ones) */
+.masonry {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr));
+  align-items: stretch;
+  gap: var(--tile-gap);
+}
+.masonry__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tile-gap);
+}
+.masonry__col > .tile {
+  flex: 1 1 auto;
+}
+.masonry__col > .tile.is-fixed {
+  flex-grow: 0;
 }
 
 .ar-full {
@@ -1184,20 +1188,7 @@ button {
   }
 }
 
-@media (max-width: 1100px) {
-  .all-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 799px) {
-  /* Featured: every tile full width, keeping its own proportion */
-  .feature-grid > .tile {
-    grid-column: 1 / -1;
-  }
-  .all-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
   .tile__ui {
     padding: 10px;
   }
@@ -1222,12 +1213,6 @@ button {
     flex: 1 0 auto;
     min-width: 0;
     gap: 12px;
-  }
-}
-
-@media (max-width: 520px) {
-  .all-grid {
-    grid-template-columns: 1fr;
   }
 }
 

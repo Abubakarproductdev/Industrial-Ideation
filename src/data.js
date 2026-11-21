@@ -414,7 +414,7 @@ const tiles = {
   "character-animations": ["dark", "square", "Animation · Rendering"],
   "autofade-trimmer": ["dark", "wide", "Product Design · Mechanism"],
   "perfume-bottle": ["light", "tall", "Product Design · Glass"],
-  "heated-hair-brush": ["light", "square", "Product Design · Drawings"],
+  "heated-hair-brush": ["light", "wide", "Product Design · Drawings"],
   "waterproof-trash-can": ["light", "tall", "Product Design · Automotive"],
   "oil-massager": ["dark", "square", "Product Design · Mechanism"],
   "capless-marker": ["light", "wide", "Product Design · Mechanism"],
@@ -438,21 +438,22 @@ for (const p of projects) {
 export const categoryShort = (id) =>
   ({ manufacturing: "Manufacturing", rendering: "Blender Studio", prototype: "Prototype" })[id] ?? id;
 
-// Home page "Featured Work" layout, read row by row:
-//   full = one 16:9 tile across the row
-//   tall = half-width 4:5 · wide = half-width 3:2
-//   align "right" puts a lone half tile in the right column
+// Home page "Featured Work" layout, top to bottom:
+//   full = one 16:9 tile across the page
+//   tall (4:5) / wide (3:2) = half-width tiles; consecutive half tiles are
+//   packed into two gap-free columns (shorter column's tiles grow to fit)
+//   fixed: true = never stretch this tile (product would get cropped)
 export const featured = [
   { slug: "boat-design", size: "full" },
   { slug: "perfume-bottle", size: "tall" },
-  { slug: "heated-hair-brush", size: "wide" },
+  { slug: "heated-hair-brush", size: "wide", fixed: true },
   { slug: "spam-packaging", size: "tall" },
   { slug: "waterproof-trash-can", size: "tall" },
   { slug: "autofade-trimmer", size: "full" },
   { slug: "water-bottle-sleeves", size: "tall" },
-  { slug: "capless-marker", size: "full" },
   { slug: "oil-massager", size: "wide" },
   { slug: "smart-infant-chair", size: "tall" },
+  { slug: "capless-marker", size: "full" },
 ];
 
 export const getProject = (slug) => projects.find((p) => p.slug === slug);
